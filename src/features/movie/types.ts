@@ -1,9 +1,14 @@
-export type Movie = {
+export interface Movie {
   title: string,
   genre:string,
   releaseAt: string,
   director:string,
   explan?: string
+}
+
+export interface MovieListState {
+  movies: Movie[] | [],
+
 }
 
 export type MovieAction = 
