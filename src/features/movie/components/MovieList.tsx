@@ -5,13 +5,18 @@ import {useInfiniteQuery} from '@tanstack/react-query';
 
 const MovieList = () => {
   const {ref, inView} = useInView();
-  // const {
-  //   data,
-  //   is
-    
-  // } = useInfiniteQuery({
+  const {
+    data,
+    error,    
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['movies'],
+    queryFn: ()=>{},
+  });
 
-  // });
+  console.log(data, isFetchingNextPage, hasNextPage, fetchNextPage, error)
 
   useEffect(()=>{
     if(inView){
