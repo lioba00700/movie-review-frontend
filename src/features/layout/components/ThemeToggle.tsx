@@ -3,24 +3,24 @@ import { MdOutlineLightMode } from "react-icons/md";
 
 type ThemeToggle = {
   theme:string, 
-  onClick:(theme:string)=>void
+  onClick:()=>void
 }
 
 const ThemeToggle = ({theme, onClick}:ThemeToggle) => {
   return (
-    <div className={`${theme==='light' ? "bg-gray-400" : "bg-white"} w-[50px]`}>
-      <button onClick={()=>onClick('light')}/>
-      <button onClick={()=>onClick('dark')}/>
-      <span className="">
+    <button 
+      className={`${theme==='light' ? "bg-black" : "bg-white border-gray-400 border-1"} flex w-[60px] transition-all rounded-full cursor-pointer p-[3px]`}
+      onClick={onClick} >
+      <span className={`${theme==='light' ? "bg-white -translate-x-0" : "bg-black translate-x-full"} flex w-[25px] h-[25px] rounded-full transition-all items-center justify-center`}>
         {
           theme == 'light' ? (
-            <MdDarkMode className="text-white"/>
+            <MdDarkMode className="text-black"/>
           ) : (
-            <MdOutlineLightMode />
+            <MdOutlineLightMode className="text-white"/>
           )
         }
       </span>
-    </div>
+    </button>
   )
 }
 

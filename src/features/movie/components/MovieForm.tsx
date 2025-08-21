@@ -5,6 +5,7 @@ import type { InputItem } from "../../../common/types";
 import CustomButton from "../../../common/components/CustomButton";
 
 const movieInputs:InputItem[] = [
+  {label:'포스터', key: 'poster', type: 'file'},
   {label:'제목', key: 'title', type: 'text'},
   {label:'장르', key: 'genre', type: 'text'},
   {label:'개봉일', key: 'releaseAt', type: 'date'},
@@ -12,6 +13,7 @@ const movieInputs:InputItem[] = [
 ]
 
 const movieInitialForm:MovieCreateState = {
+  poster: null,
   title: '',
   genre: '',
   releaseAt: '2025-01-01',
@@ -50,16 +52,16 @@ const MovieForm = () => {
   },[form])
 
   return (
-    <div>
+    <div className="w-md">
       {
         movieInputs.map((input)=>(
-          <>
-            <label>{input.label}</label>
-            <CustomInput type={input.type} onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: input.key, value: e.target.value}})} value={form[input.key as keyof MovieCreateState]}/>
-          </>
+          <div key={input.key} className="flex flex-col gap-[5px] mb-[15px]">
+            <label className="font-semibold">{input.label}</label>
+            <CustomInput type={input.type} onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: input.key, value: input.type==='file' ? e.target.files?.[0] || null : e.target.value}})} {...(input.type!=='file' ? {value: form[input.key as Exclude<keyof MovieCreateState, typeof File | null>] as string} : null )} />
+          </div>
         ))
       }
-      <CustomButton value="등록" onClick={handleSubmitMovie} disabled={subDisabled}/>
+      <CustomButton value="등록" onClick={handleSubmitMovie} disabled={subDisabled} style="mt-[50px] bg-blue-600 text-white text-md font-bold p-[8px] w-[50%]"/>
     </div>
   )
 }

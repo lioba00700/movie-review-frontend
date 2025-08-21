@@ -1,8 +1,11 @@
 import { create } from 'zustand'
+import type { ThemeState } from '../types';
 
-const useThemeStore = create((set)=>({
-    theme: 'light',
-    changeTheme: (theme: 'light' | 'dark') => set({theme: theme})
+const useThemeStore = create<ThemeState>((set)=>({
+  theme: 'light',
+  changeTheme: () => set((state)=>({
+    theme: state.theme === 'light' ? 'dark' : 'light'
+  }))
 }))
 
 export default useThemeStore;
