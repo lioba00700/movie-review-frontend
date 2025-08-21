@@ -7,7 +7,7 @@ type CustomInput = {
 const CustomInput = ({type, value, onChange}:CustomInput) => {
   return (
     <input
-      className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg" 
+      className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400" 
       type={type} 
       value={value} 
       onChange={onChange}

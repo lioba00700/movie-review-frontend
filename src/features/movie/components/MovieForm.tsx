@@ -52,7 +52,7 @@ const MovieForm = () => {
   },[form])
 
   return (
-    <div className="w-md">
+    <div className="w-full">
       {
         movieInputs.map((input)=>(
           <div key={input.key} className="flex flex-col gap-[5px] mb-[15px]">
@@ -61,7 +61,7 @@ const MovieForm = () => {
           </div>
         ))
       }
-      <CustomButton value="등록" onClick={handleSubmitMovie} disabled={subDisabled} style="mt-[50px] bg-blue-600 text-white text-md font-bold p-[8px] w-[50%]"/>
+      <CustomButton value="등록" onClick={handleSubmitMovie} disabled={subDisabled} style="mt-[50px] bg-blue-600 text-white text-md font-bold p-[8px] w-[50%] dark:disabled:bg-gray-500/50 "/>
     </div>
   )
 }

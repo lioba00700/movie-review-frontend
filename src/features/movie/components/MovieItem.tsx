@@ -9,9 +9,9 @@ const MovieItem = ({title, genre, releaseAt, director}:Movie) => {
 
   return (
     <li 
-      className="bg-white min-w-[250px] transition-all cursor-pointer rounded-xl hover:shadow-2xl overflow-hidden border-1 border-gray-200">
+      className="bg-white dark:bg-gray-500/40 dark:border-none min-w-[250px] transition-all cursor-pointer rounded-xl hover:shadow-2xl overflow-hidden border-1 border-gray-200">
       <div 
-        className="w-full bg-gray-300  aspect-[1/1.3]"
+        className="w-full bg-gray-300 dark:bg-white/20  aspect-[1/1.3]"
         onClick={()=>navigate(`/detail/${title.replace(" ","")}`)}>
           movie poster
       </div>
