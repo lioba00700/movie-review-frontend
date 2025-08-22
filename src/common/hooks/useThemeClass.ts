@@ -1,3 +1,4 @@
+//2025.08.21 루트(html) 태그 테마 클래스 추가 - 박민서
 import { useEffect } from "react";
 import useTheme from "./useTheme"
 

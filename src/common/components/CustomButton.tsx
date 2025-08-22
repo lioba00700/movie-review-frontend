@@ -1,3 +1,5 @@
+//2025.08.20 커스텀 버튼 - 박민서
+
 type CustomButton = {
   value: string,
   onClick: ()=>void,

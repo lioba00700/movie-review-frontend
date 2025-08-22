@@ -1,3 +1,4 @@
+//2025.08.21 모달 상태 관리 로직 - 박민서
 import { create } from "zustand";
 import type { ModalState } from "@/common/types";
 

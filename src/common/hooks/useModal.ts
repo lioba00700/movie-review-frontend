@@ -1,3 +1,4 @@
+//2025.08.21 Zustand 모달 상태값 관리 - 박민서
 import useModalStore from "@/common/store/useModalStore"
 
 const useModal = () => {

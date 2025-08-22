@@ -1,5 +1,5 @@
+//2025.08.21 영화 상세 컴포넌트 - 박민서
 import type { Movie } from "@movie/types";
-
 
 const MovieDetail = ({title, genre, releaseAt, director, explan}:Movie) => {
   return (

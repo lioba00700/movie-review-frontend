@@ -1,3 +1,4 @@
+//2025.08.21 레이아웃 컴포넌트 - 박민서 
 import type React from "react"
 import MainHeader from "./MainHeader"
 import useModal from "@/common/hooks/useModal"

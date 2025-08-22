@@ -1,3 +1,4 @@
+//2025.08.22 영화 목록 아이템 - 박민서
 import { useNavigate } from "react-router-dom"
 import type { Movie } from "@movie/types";
 import CustomButton from "@/common/components/CustomButton";

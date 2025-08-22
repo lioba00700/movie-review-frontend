@@ -1,3 +1,6 @@
+//2025.08.21 공용으로 사용되는 유틸 함수 관리
+
+//날짜 포맷; yyyy-mm-dd
 export const FormatDate = (date: Date):string => {
   console.log(date)
   const year = date.getFullYear();

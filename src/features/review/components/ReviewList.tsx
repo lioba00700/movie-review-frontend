@@ -1,3 +1,5 @@
+//2025.08.22 스켈레톤 UI 적용 - 박민서
+//2025.08.21 리뷰 목록 컴포넌트 - 박민서
 import { useEffect } from "react";
 import ReviewItem from "./ReviewItem";
 import ReviewForm from "./ReviewForm";

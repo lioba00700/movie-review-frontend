@@ -1,3 +1,4 @@
+//2025.08.21 테마 상태 관리 로직 - 박민서
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { ThemeState } from '@/common/types';

@@ -1,3 +1,4 @@
+//2025.08.21 리뷰 목록 아이템
 import CustomButton from "@/common/components/CustomButton";
 import useModal from "@/common/hooks/useModal";
 import RatingButton from "./RatingButton";

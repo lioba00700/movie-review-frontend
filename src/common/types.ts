@@ -1,3 +1,5 @@
+//2025.08.21 공용으로 사용되는 타입 관리 - 박민서
+
 export type InputItem = {
   label:string, 
   key:string, 

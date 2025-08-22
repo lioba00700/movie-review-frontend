@@ -1,9 +1,10 @@
+//2025.08.22 스켈레톤 UI 적용
+//2025.08.21 영화 목록 컴포넌트 
 import { useEffect } from "react";
 import MovieItem from "./MovieItem";
 import { useInView } from 'react-intersection-observer';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import React from "react";
-import SkeletonMovieItem from "@movie/components/SkeletonMovieItem";
 import SkeletonMovieList from "./SkeletonMovieList";
 
 const MovieList = () => {

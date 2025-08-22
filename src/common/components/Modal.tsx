@@ -1,3 +1,5 @@
+//2025.08.21 모달 컴포넌트 생성 - 박민서
+
 import MovieForm from "@movie/components/MovieForm";
 import ReviewForm from "@review/components/ReviewForm";
 import useModal from "@/common/hooks/useModal";

@@ -1,3 +1,4 @@
+//2025.08.21 평점 버튼 - 박민서
 import { IoStar, IoStarOutline } from "react-icons/io5";
 
 const RatingButton = ({rating, onClick, disabled}:{rating:number, onClick?:(rating:number)=>void, disabled?:boolean}) => {
