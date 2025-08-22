@@ -6,9 +6,11 @@ import MovieCreatePage from './pages/MovieCreatePage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import useThemeClass from './common/hooks/useThemeClass';
 import Layout from './features/layout/components/Layout';
+import useScrollTop from './common/hooks/useScrollTop';
 
 function App() {
   useThemeClass();
+  useScrollTop();
   return (
     <Layout>
       <Routes>
