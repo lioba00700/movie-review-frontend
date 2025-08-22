@@ -1,5 +1,5 @@
-import CustomButton from "../../../common/components/CustomButton";
-import useModal from "../../../common/hooks/useModal";
+import CustomButton from "@/common/components/CustomButton";
+import useModal from "@/common/hooks/useModal";
 import RatingButton from "./RatingButton";
 
 const ReviewItem = () => {

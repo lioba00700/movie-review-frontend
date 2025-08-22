@@ -1,6 +1,6 @@
 import MovieForm from "@movie/components/MovieForm";
-import ReviewForm from "../../features/review/components/ReviewForm";
-import useModal from "../hooks/useModal";
+import ReviewForm from "@review/components/ReviewForm";
+import useModal from "@/common/hooks/useModal";
 import CustomButton from "./CustomButton";
 
 const Modal = () => {

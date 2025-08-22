@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ThemeState } from '../types';
+import type { ThemeState } from '@/common/types';
 
 const useThemeStore = create<ThemeState>()(
   persist((set)=>({

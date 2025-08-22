@@ -1,7 +1,7 @@
 import { useReducer } from "react";
-import CustomButton from "../../../common/components/CustomButton";
-import CustomInput from "../../../common/components/CustomInput";
-import type { ReviewAction, ReviewCreateState } from "../types";
+import CustomButton from "@/common/components/CustomButton";
+import CustomInput from "@/common/components/CustomInput";
+import type { ReviewAction, ReviewCreateState } from "@review/types";
 import RatingButton from "./RatingButton";
 
 const reviewInitialForm:ReviewCreateState = {
@@ -38,8 +38,7 @@ const ReviewForm = ({onSubmit, type}:{type: 'edit' | 'create',onSubmit:()=>void}
         <div className="flex flex-col gap-[5px] mb-[5px]">
           <RatingButton rating={form.rating} onClick={(rating)=>dispatch({type:'CHAGNE', payload:{key:'rating', value: rating}})} />
         </div>
-        <label className="font-semibold">이름</label>
-        <CustomInput type={'text'} onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: 'writer', value: e.target.value}})} value={form['writer']}/>
+        <CustomInput label="이름" type={'text'} onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: 'writer', value: e.target.value}})} value={form['writer']}/>
       </div>
       <div className="flex flex-col gap-[5px] mb-[5px]">
         <label className="font-semibold">내용</label>

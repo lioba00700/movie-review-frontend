@@ -1,4 +1,4 @@
-import useModalStore from "../store/useModalStore"
+import useModalStore from "@/common/store/useModalStore"
 
 const useModal = () => {
   const type = useModalStore((state)=>state.modal.type);

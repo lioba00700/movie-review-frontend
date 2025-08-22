@@ -1,7 +1,8 @@
 export type InputItem = {
   label:string, 
   key:string, 
-  type:string
+  type:string,
+  required?:boolean
 }
 
 export type ThemeState = {

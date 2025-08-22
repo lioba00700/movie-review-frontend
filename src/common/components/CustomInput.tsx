@@ -1,17 +1,27 @@
+//2025.08.22 label 추가 및 필수 입력 표시 - 박민서
+
 type CustomInput = {
+  label: string,
+  required?:boolean,
   type: string,
   value?: string,
   onChange: (e:React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const CustomInput = ({type, value, onChange}:CustomInput) => {
+const CustomInput = ({label, required, type, value, onChange}:CustomInput) => {
   return (
-    <input
-      className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400" 
-      type={type} 
-      value={value} 
-      onChange={onChange}
-      {...(type==='file' ? {accept: 'image/jpg, image/png, image/jpeg'} : null)} />
+    <div className="flex flex-col gap-[5px] mb-[15px]">
+      <label className="font-semibold">
+        {label}
+        {required && <span className="ml-[5px] text-red-600">*</span> } 
+      </label>
+      <input
+        className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400" 
+        type={type} 
+        value={value} 
+        onChange={onChange}
+        {...(type==='file' ? {accept: 'image/jpg, image/png, image/jpeg'} : null)} />
+    </div>
   )
 }
 

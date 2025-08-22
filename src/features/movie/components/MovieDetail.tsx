@@ -1,4 +1,4 @@
-import type { Movie } from "../types";
+import type { Movie } from "@movie/types";
 
 
 const MovieDetail = ({title, genre, releaseAt, director, explan}:Movie) => {

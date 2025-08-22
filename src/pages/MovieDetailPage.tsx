@@ -1,7 +1,7 @@
 //2025.08.21 작성 - 박민서
 //영화 상세 페이지
-import MovieDetail from "../features/movie/components/MovieDetail";
-import ReviewList from "../features/review/components/ReviewList";
+import MovieDetail from "@movie/components/MovieDetail";
+import ReviewList from "@review/components/ReviewList";
 
 const MovieDetailPage = () => {
   return (

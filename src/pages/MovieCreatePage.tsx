@@ -1,6 +1,6 @@
 //2025.08.21 작성 - 박민서
 //영화 등록 페이지
-import MovieForm from "../features/movie/components/MovieForm";
+import MovieForm from "@movie/components/MovieForm";
 
 const MovieCreatePage = () => {
   return (

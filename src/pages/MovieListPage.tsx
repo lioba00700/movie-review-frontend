@@ -1,6 +1,6 @@
 //2025.08.21 작성 - 박민서
 //영화 목록 페이지
-import MovieList from "../features/movie/components/MovieList";
+import MovieList from "@movie/components/MovieList";
 
 const MovieListPage = () => {
   return(

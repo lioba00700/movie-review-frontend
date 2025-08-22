@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import type { Movie } from "../types";
-import CustomButton from "../../../common/components/CustomButton";
-import useModal from "../../../common/hooks/useModal";
+import type { Movie } from "@movie/types";
+import CustomButton from "@/common/components/CustomButton";
+import useModal from "@/common/hooks/useModal";
 
 const MovieItem = ({title, genre, releaseAt, director}:Movie) => {
   const navigate = useNavigate();
