@@ -5,6 +5,7 @@ import type { MovieAction, MovieCreateState } from "@movie/types";
 import type { InputItem } from "@/common/types";
 import CustomButton from "@/common/components/CustomButton";
 import { FormatDate } from "@/common/utils";
+import ImageUploader from "@/common/components/ImageUploader";
 
 const movieInputs:InputItem[] = [
   {label:'포스터', key: 'poster', type: 'file', required:true},
@@ -55,6 +56,7 @@ const MovieForm = () => {
 
   return (
     <div className="w-full">
+      <ImageUploader value={form.poster} onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: 'poster', value: e.target.files?.[0] || null }})}/>
       {
         movieInputs.map((input)=>(
           <CustomInput 

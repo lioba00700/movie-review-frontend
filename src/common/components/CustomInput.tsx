@@ -1,4 +1,4 @@
-//2025.08.22 label 추가 및 필수 입력 표시 - 박민서
+//2025.08.22 label 추가 및 필수 입력 표시, 이미지 파일 등록 로직 분리 (ImageUploader) - 박민서
 
 type CustomInput = {
   label: string,
