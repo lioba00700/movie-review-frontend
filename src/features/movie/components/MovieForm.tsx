@@ -3,6 +3,7 @@ import CustomInput from "../../../common/components/CustomInput";
 import type { MovieAction, MovieCreateState } from "../types";
 import type { InputItem } from "../../../common/types";
 import CustomButton from "../../../common/components/CustomButton";
+import { FormatDate } from "../../../common/utils";
 
 const movieInputs:InputItem[] = [
   {label:'포스터', key: 'poster', type: 'file'},
@@ -16,7 +17,7 @@ const movieInitialForm:MovieCreateState = {
   poster: null,
   title: '',
   genre: '',
-  releaseAt: '2025-01-01',
+  releaseAt: FormatDate(new Date()),
   director: ''
 }
 
@@ -33,6 +34,7 @@ const movieReducer = (state:MovieCreateState, action:MovieAction) => {
 }
 
 const MovieForm = () => {
+  const now = new Date();
   const [form, dispatch] = useReducer(movieReducer, movieInitialForm);
   const [subDisabled, setSubDisabled]  = useState<boolean>(true);
 

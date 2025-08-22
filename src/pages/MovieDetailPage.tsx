@@ -5,7 +5,7 @@ const MovieDetailPage = () => {
   return (
     <div className="w-full h-full dark:text-white">
       <MovieDetail title={"영화 제목"} genre="호러" releaseAt="2025-05-05" director="홍길동" explan="영화설명" poster=""/>
-      <div className="m-[50px]">
+      <div className="p-[50px] dark:bg-black">
         <ReviewList />
       </div>
     </div>
