@@ -3,6 +3,8 @@ import MovieItem from "./MovieItem";
 import { useInView } from 'react-intersection-observer';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import React from "react";
+import SkeletonMovieItem from "@movie/components/SkeletonMovieItem";
+import SkeletonMovieList from "./SkeletonMovieList";
 
 const MovieList = () => {
   const {ref, inView} = useInView();
@@ -26,7 +28,8 @@ const MovieList = () => {
 
   const {
     data,
-    error,    
+    error,   
+    isLoading, 
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -46,6 +49,9 @@ const MovieList = () => {
 
   return(
     <>
+      {
+        isLoading && <SkeletonMovieList /> 
+      }
       <ul className="grid grid-cols-5 gap-[20px] xl:max-2xl:grid-cols-4 md:max-xl:grid-cols-3 sm:max-md:grid-cols-2 max-sm:grid-cols-1 justify-center">
         {
           data?.pages.map((group,i)=>(
@@ -65,7 +71,13 @@ const MovieList = () => {
           ))
         }
       </ul>
-      <div ref={ref}></div>
+      {
+        isFetchingNextPage ? (
+          <SkeletonMovieList />
+        ) : (
+          <div ref={ref}></div>
+        )
+      }
     </>
   )
 }

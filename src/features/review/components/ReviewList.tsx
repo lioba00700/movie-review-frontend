@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import CustomButton from "../../../common/components/CustomButton";
+import { useEffect } from "react";
 import ReviewItem from "./ReviewItem";
 import ReviewForm from "./ReviewForm";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
+import SkeletonReviewList from "./SkeletonReviewList";
 
 const ReviewList = () => {
   const {ref, inView} = useInView();
@@ -28,7 +28,8 @@ const ReviewList = () => {
 
   const {
     data,
-    error,    
+    error,   
+    isLoading, 
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -51,6 +52,9 @@ const ReviewList = () => {
       <div className="w-md mb-[30px]">
         <ReviewForm type="create" onSubmit={()=>{}}/>
       </div>
+      {
+        isLoading && <SkeletonReviewList />
+      }
       <ul className="flex flex-col gap-[20px] w-[60%] min-w-xl">
         {
           data?.pages.map((group,i)=>(
@@ -64,7 +68,13 @@ const ReviewList = () => {
           ))
         }
       </ul>
-      <div ref={ref}></div>
+      {
+        isFetchingNextPage ? (
+          <SkeletonReviewList />
+        ) : (
+          <div ref={ref}></div>
+        )
+      }
     </div>
   )
 }

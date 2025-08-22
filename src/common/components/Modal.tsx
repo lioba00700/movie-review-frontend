@@ -1,4 +1,4 @@
-import MovieForm from "../../features/movie/components/MovieForm";
+import MovieForm from "@movie/components/MovieForm";
 import ReviewForm from "../../features/review/components/ReviewForm";
 import useModal from "../hooks/useModal";
 import CustomButton from "./CustomButton";

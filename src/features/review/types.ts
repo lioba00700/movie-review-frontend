@@ -1,3 +1,6 @@
+//2025.08.21 작성 - 박민서
+//리뷰 관련 타입 선언
+
 export interface Review {
   writer: string,
   detail: string,

@@ -1,6 +1,7 @@
+//2025.08.21 레이아웃 컴포넌트 추가 - 박민서
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import MovieListPage from './pages/MovieListPage';
+import MovieListPage from '@/pages/MovieListPage';
 import MovieCreatePage from './pages/MovieCreatePage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import useThemeClass from './common/hooks/useThemeClass';
