@@ -19,8 +19,7 @@ const CustomInput = ({label, required, type, value, onChange}:CustomInput) => {
         className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400" 
         type={type} 
         value={value} 
-        onChange={onChange}
-        {...(type==='file' ? {accept: 'image/jpg, image/png, image/jpeg'} : null)} />
+        onChange={onChange}/>
     </div>
   )
 }

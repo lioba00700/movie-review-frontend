@@ -8,7 +8,6 @@ import { FormatDate } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
 
 const movieInputs:InputItem[] = [
-  {label:'포스터', key: 'poster', type: 'file', required:true},
   {label:'제목', key: 'title', type: 'text',required:true},
   {label:'장르', key: 'genre', type: 'text',required:true},
   {label:'개봉일', key: 'releaseAt', type: 'date', required:true},
@@ -64,8 +63,8 @@ const MovieForm = () => {
             label={input.label} 
             required={input.required}
             type={input.type} 
-            onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: input.key, value: input.type==='file' ? e.target.files?.[0] || null : e.target.value}})} 
-            {...(input.type!=='file' ? {value: form[input.key as Exclude<keyof MovieCreateState, typeof File | null>] as string} : null )} />
+            onChange={(e)=>dispatch({type:'CHAGNE', payload:{key: input.key, value: e.target.value}})} 
+            value={form[input.key as Exclude<keyof MovieCreateState, typeof File | null>] as string} />
         ))
       }
       <CustomButton value="등록" onClick={handleSubmitMovie} disabled={subDisabled} style="mt-[50px] bg-blue-600 text-white text-md font-bold p-[8px] w-[50%] dark:disabled:bg-gray-500/50 "/>
