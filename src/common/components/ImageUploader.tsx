@@ -1,5 +1,5 @@
 //2025.08.22 이미지 업로더 - 박민서
-
+import { MdCreate } from "react-icons/md";
 import { useEffect, useRef, useState } from "react"
 
 const ImageUploader = ({value, onChange}:{value: File | null, onChange: (e:React.ChangeEvent<HTMLInputElement>) => void}) => {
@@ -22,10 +22,22 @@ const ImageUploader = ({value, onChange}:{value: File | null, onChange: (e:React
   return(
     <>
       <div 
-        className="flex items-center justify-center bg-gray-300 outline-none aspect-[1/1.3] rounded-lg cursor-pointer dark:bg-gray-500/40 overflow-hidden mb-[15px]"
+        className="flex transition-all items-center justify-center bg-gray-300 hover:bg-gray-400 outline-none aspect-[1/1.4] rounded-lg cursor-pointer dark:bg-gray-500/40 overflow-hidden mb-[15px] group relative"
         onClick={()=>inputRef.current?.click()}>
         {
-          image==='' ? <span>이미지를 선택해주세요.</span> : <img src={image} alt="poster-image" />
+          image==='' 
+          ? <span>포스터를 선택해주세요.</span> 
+          : (
+            <>
+              {
+                <div className="absolute text-white w-full h-full hidden group-hover:flex bg-black/50 items-center justify-center select-none">
+                  <MdCreate color="white" size={20}/>
+                  <p>포스터 변경</p>
+                </div>
+              }
+              <img className="w-full" src={image} alt="poster-image" />
+            </>
+          )
         }
       </div>
       <input

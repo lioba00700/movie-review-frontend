@@ -2,7 +2,7 @@
 //영화 등록 페이지
 import MovieForm from "@movie/components/MovieForm";
 
-const MovieCreatePage = () => {
+const MovieFormPage = () => {
   return (
     <div className="pt-[90px] h-full p-[50px] w-md dark:text-white">
       <h1 className="text-2xl font-bold mb-[30px]">영화 등록</h1>
@@ -11,4 +11,4 @@ const MovieCreatePage = () => {
   )
 }
 
-export default MovieCreatePage;
+export default MovieFormPage;
