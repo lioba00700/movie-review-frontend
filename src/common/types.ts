@@ -12,6 +12,10 @@ export type ThemeState = {
   changeTheme: () => void
 }
 
+export type FormAction = 
+  | {type: "CHAGNE", payload:{key:string, value: string | File | null}}
+  | {type: "RESET"};
+
 export type ModalState = {
   modal: {
     isOpen: boolean,
