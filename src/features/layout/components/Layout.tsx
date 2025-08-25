@@ -7,7 +7,7 @@ import Modal from "@/common/components/Modal";
 const Layout = ({children}:{children: React.ReactNode}) => {
   const {isOpen} = useModal();
   return(
-    <div className="dark:bg-black">
+    <div className="dark:bg-black min-h-screen">
       <MainHeader />
       {children}
       {
