@@ -15,9 +15,6 @@ export interface MovieListState {
 
 }
 
-export type MovieAction = 
-  | {type: "CHAGNE", payload:{key:string, value: string | File | null}}
-  | {type: "RESET"};
 
 export type MovieCreateState = {
   poster: File | null,
