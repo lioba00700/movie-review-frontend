@@ -19,9 +19,15 @@ const MainHeader = () => {
             <h1 className="text-2xl font-bold dark:text-white">영화 리뷰</h1>
             <div className="flex gap-[30px] text-lg font-semibold text-gray-600 dark:text-gray-200">
                 <p className="hover:text-gray-400 cursor-pointer" onClick={()=>navigate('/')}>목록</p>
-                <p className="hover:text-gray-400 cursor-pointer" onClick={()=>navigate('/add')} >영화 등록</p>
+                <p className="hover:text-gray-400 cursor-pointer" onClick={()=>navigate('/add/director')} >감독 등록</p>
+                {
+                    <p className="hover:text-gray-400 cursor-pointer" onClick={()=>navigate('/admin/movies')} >영화 관리</p>
+                }
             </div>
-            <ThemeToggle theme={theme} onClick={toggleTheme}/>
+            <div className="flex items-center gap-[20px] ">
+                <p className="hover:text-gray-400 cursor-pointer text-gray-600 dark:text-gray-200 text-lg font-semibold" onClick={()=>navigate('/admin/login')} >관리자 로그인</p>
+                <ThemeToggle theme={theme} onClick={toggleTheme}/>
+            </div>
         </header>
     )
 }
