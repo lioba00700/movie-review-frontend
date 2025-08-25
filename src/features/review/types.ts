@@ -16,7 +16,7 @@ export type ReviewAction =
   | {type: "RESET"};
 
 export type ReviewCreateState = {
-  writer: string,
-  detail: string,
+  name: string,
+  review: string,
   rating: number,
 }

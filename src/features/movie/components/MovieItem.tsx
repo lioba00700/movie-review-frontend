@@ -3,16 +3,16 @@
 import { useNavigate } from "react-router-dom";
 import type { Movie } from "@movie/types";
 
-const MovieItem = ({ title, genre, releaseAt, director }: Movie) => {
+const MovieItem = ({ id, title, genre, releaseAt, director, poster }: Movie) => {
   const navigate = useNavigate();
 
   return (
     <li className="bg-white dark:bg-gray-500/40 dark:border-none min-w-[250px] transition-all cursor-pointer rounded-xl hover:shadow-2xl overflow-hidden border-1 border-gray-200">
       <div
         className="w-full bg-gray-300 dark:bg-white/20  aspect-[1/1.3]"
-        onClick={() => navigate(`/detail/${title.replace(" ", "")}`)}
+        onClick={() => navigate(`/detail/${id}`)}
       >
-        movie poster
+        <img src={poster} alt="poster" />
       </div>
       <div className="p-[30px]">
         <h4 className="text-xl font-bold mb-[10px]">{title}</h4>

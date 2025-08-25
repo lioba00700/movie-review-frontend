@@ -8,18 +8,24 @@ import { formatDate } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
 
 const movieInputs: InputItem[] = [
-  { label: "제목", key: "title", type: "text", required: true },
-  { label: "장르", key: "genre", type: "text", required: true },
-  { label: "개봉일", key: "releaseAt", type: "date", required: true },
-  { label: "감독", key: "director", type: "text", required: true },
+  { label: "제목", key: "movie_name", type: "text", required: true },
+  { label: "장르", key: "movie_genre", type: "text", required: true },
+  { label: "개봉일", key: "movie_date", type: "date", required: true },
+  { label: "상영시간", key: "movie_time", type: "time", required: true },
+  { label: "감독", key: "movie_director", type: "text", required: true },
+  { label: "출연진", key: "movie_cast_list", type: "text", required: true },
+  { label: "줄거리", key: "movie_description", type: "text", required: true },
 ];
 
 const movieInitialForm: MovieCreateState = {
-  poster: null,
-  title: "",
-  genre: "",
-  releaseAt: formatDate(new Date()),
-  director: "",
+  movie_image: null,
+  movie_name: "",
+  movie_genre: "",
+  movie_date: formatDate(new Date()),
+  movie_time: "",
+  movie_director: "",
+  movie_cast_list: "",
+  movie_description: "",
 };
 
 const movieReducer = (state: MovieCreateState, action: FormAction) => {
@@ -59,11 +65,11 @@ const MovieForm = () => {
         type="poster"
         label="포스터 이미지"
         required={true}
-        value={form.poster}
+        value={form.movie_image}
         onChange={e =>
           dispatch({
             type: "CHAGNE",
-            payload: { key: "poster", value: e.target.files?.[0] || null },
+            payload: { key: "movie_image", value: e.target.files?.[0] || null },
           })
         }
       />

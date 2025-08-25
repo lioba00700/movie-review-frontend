@@ -2,24 +2,26 @@
 //영화 관련 타입 선언
 
 export interface Movie {
-  poster: string,
-  title: string,
-  genre:string,
-  releaseAt: string,
-  director:string,
-  explan?: string
+  id: number,
+  poster: string;
+  title: string;
+  genre: string;
+  releaseAt: string;
+  director: string;
+  explan?: string;
 }
 
 export interface MovieListState {
-  movies: Movie[] | [],
-
+  movies: Movie[] | [];
 }
-
 
 export type MovieCreateState = {
-  poster: File | null,
-  title: string,
-  genre: string,
-  releaseAt: string,
-  director: string
-}
+  movie_name: string;
+  movie_date: string;
+  movie_time: string;
+  movie_director: string;
+  movie_cast_list: string;
+  movie_genre: string;
+  movie_description: string;
+  movie_image: File | null;
+};

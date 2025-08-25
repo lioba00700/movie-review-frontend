@@ -17,7 +17,8 @@ function App() {
         <Route path='/' element={<MovieListPage/>}/>
         <Route path='/add' element={<MovieFormPage/>}/>
         <Route path='/add/director' element={<DirectorFormPage />} />
-        <Route path='/detail/:movieTitle' element={<MovieDetailPage />} />
+        <Route path='/edit/:movieId' element={<MovieFormPage/>}/>
+        <Route path='/detail/:movieId' element={<MovieDetailPage />} />
         
         {/*관리자*/}
         <Route path='/admin/login' element={<AdminLoginPage />} />
