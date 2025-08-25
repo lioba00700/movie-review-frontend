@@ -2,7 +2,6 @@
 //영화 관련 타입 선언
 
 export interface Movie {
-  id: number,
   poster: string;
   title: string;
   genre: string;

@@ -2,6 +2,7 @@
 import type { Movie } from "@movie/types";
 
 const MovieDetail = ({title, genre, releaseAt, director, explan}:Movie) => {
+
   return (
     <div className="h-screen">
       <div className="bg-gray-300 h-full dark:bg-gray-500/50">ㅁㄴㅇㄹ</div>
