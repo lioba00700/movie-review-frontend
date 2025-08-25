@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import SkeletonMovieList from "./SkeletonMovieList";
 import { getMovieList } from "../services/movieAPI";
+import BackToTopButton from "@/common/components/BackToTopButton";
 
 const MovieList = () => {
   const { ref, inView } = useInView();
@@ -57,7 +58,7 @@ const MovieList = () => {
       {isLoading && <SkeletonMovieList />}
       <ul className="grid grid-cols-5 gap-[20px] xl:max-2xl:grid-cols-4 md:max-xl:grid-cols-3 sm:max-md:grid-cols-2 max-sm:grid-cols-1 justify-center">
         {data?.pages.map((group, i) => (
-          <React.Fragment key={i}>
+          <div key={i}>
             {group.movies?.map(
               (movie: {
                 id: number;
@@ -81,10 +82,11 @@ const MovieList = () => {
                 />
               ),
             )}
-          </React.Fragment>
+          </div>
         ))}
       </ul>
       {isFetchingNextPage ? <SkeletonMovieList /> : <div ref={ref}></div>}
+      <BackToTopButton />
     </>
   );
 };
