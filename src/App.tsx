@@ -1,12 +1,12 @@
 //2025.08.21 레이아웃 컴포넌트 추가 - 박민서
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import MovieListPage from '@/pages/movie/MovieListPage';
-import MovieFormPage from '@/pages/movie/MovieFormPage';
-import MovieDetailPage from '@/pages/movie/MovieDetailPage';
 import useThemeClass from '@/common/hooks/useThemeClass';
 import Layout from '@/features/layout/components/Layout';
 import useScrollTop from '@/common/hooks/useScrollTop';
+import NotFoundPage from './pages/NotFoundPage';
+import { DirectorFormPage, MovieDetailPage, MovieFormPage, MovieListPage } from '@/pages/movie'
+import { AdminLoginPage, AdminSignupPage, AdminMoviePage } from '@/pages/admin';
 
 function App() {
   useThemeClass();
@@ -16,15 +16,16 @@ function App() {
       <Routes>
         <Route path='/' element={<MovieListPage/>}/>
         <Route path='/add' element={<MovieFormPage/>}/>
+        <Route path='/add/director' element={<DirectorFormPage />} />
         <Route path='/detail/:movieTitle' element={<MovieDetailPage />} />
         
         {/*관리자*/}
-        <Route path='/admin/login' element={<MovieDetailPage />} />
-        <Route path='/admin/signup' element={<MovieDetailPage />} />
-        <Route path='/admin/movies' element={<MovieDetailPage />} />
+        <Route path='/admin/login' element={<AdminLoginPage />} />
+        <Route path='/admin/signup' element={<AdminSignupPage />} />
+        <Route path='/admin/movies' element={<AdminMoviePage />} />
         
         {/*404*/}
-        <Route path='*' element={<MovieDetailPage />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Layout>
   )
