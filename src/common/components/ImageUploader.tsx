@@ -2,7 +2,7 @@
 import { MdCreate } from "react-icons/md";
 import { useEffect, useRef, useState } from "react"
 
-const ImageUploader = ({value, onChange}:{value: File | null, onChange: (e:React.ChangeEvent<HTMLInputElement>) => void}) => {
+const ImageUploader = ({value, onChange, type, label, required}:{value: File | null, onChange: (e:React.ChangeEvent<HTMLInputElement>) => void, type: 'poster' | 'profile', label:string, required:boolean}) => {
   const [image, setImage] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -21,18 +21,22 @@ const ImageUploader = ({value, onChange}:{value: File | null, onChange: (e:React
 
   return(
     <>
+      <label className="font-semibold">
+        {label}
+        {required && <span className="ml-[5px] text-red-600">*</span> } 
+      </label>
       <div 
-        className="flex transition-all items-center justify-center bg-gray-300 hover:bg-gray-400 outline-none aspect-[1/1.4] rounded-lg cursor-pointer dark:bg-gray-500/40 overflow-hidden mb-[15px] group relative"
+        className={`${type==='poster' ? "aspect-[1/1.4]" : "aspect-[1/1]"} flex transition-all items-center justify-center bg-gray-300 hover:bg-gray-400 outline-none  rounded-lg cursor-pointer dark:bg-gray-500/40 overflow-hidden mb-[15px] group relative`}
         onClick={()=>inputRef.current?.click()}>
         {
           image==='' 
-          ? <span>포스터를 선택해주세요.</span> 
+          ? <span>이미지를 선택해주세요.</span> 
           : (
             <>
               {
                 <div className="absolute text-white w-full h-full hidden group-hover:flex bg-black/50 items-center justify-center select-none">
                   <MdCreate color="white" size={20}/>
-                  <p>포스터 변경</p>
+                  <p>이미지 변경</p>
                 </div>
               }
               <img className="w-full" src={image} alt="poster-image" />
