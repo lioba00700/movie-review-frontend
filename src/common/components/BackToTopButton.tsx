@@ -28,7 +28,7 @@ const BackToTopButton = () => {
         <>
         {
             scrolled && (
-                <button className="cursor-pointer border-1 rounded-full border-gray-300 hover:bg-gray-100 fixed bottom-[30px] right-[30px] p-[15px]" onClick={backToTop}>
+                <button className="cursor-pointer border-1 rounded-full border-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 fixed bottom-[30px] right-[30px] p-[15px]" onClick={backToTop}>
                     <MdArrowUpward size={30}/>
                 </button>
             )

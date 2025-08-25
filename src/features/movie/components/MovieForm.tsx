@@ -6,6 +6,8 @@ import type { FormAction, InputItem } from "@/common/types";
 import CustomButton from "@/common/components/CustomButton";
 import { formatDate } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
+import { Movie } from "@/common/schema/movie.schema";
+import { useNavigate } from "react-router-dom";
 
 const movieInputs: InputItem[] = [
   { label: "제목", key: "movie_name", type: "text", required: true },
@@ -40,14 +42,24 @@ const movieReducer = (state: MovieCreateState, action: FormAction) => {
   }
 };
 
-const MovieForm = () => {
+const MovieForm = ({onSubmit}: {onSubmit:()=>void}) => {
+  const navigate = useNavigate();
   const [form, dispatch] = useReducer(movieReducer, movieInitialForm);
   const [subDisabled, setSubDisabled] = useState<boolean>(true);
 
-  const handleSubmitMovie = () => {
+  const handleSubmitMovie = async () => {
     //입력값 확인
     //api 요청 에러처리
-    console.log("api 요청");
+    try{
+      Movie.parse(form);
+      const res = await onSubmit();
+      if(res.pass){
+        navigate('/');
+      }
+
+    }catch(error){
+      console.log(error);
+    }
   };
 
   useEffect(() => {

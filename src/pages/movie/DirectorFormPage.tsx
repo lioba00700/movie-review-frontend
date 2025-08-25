@@ -2,9 +2,11 @@
 import CustomButton from "@/common/components/CustomButton";
 import CustomInput from "@/common/components/CustomInput";
 import ImageUploader from "@/common/components/ImageUploader";
+import { Director } from "@/common/schema/director.schema";
 import type { FormAction, InputItem } from "@/common/types";
 import { formatDate } from "@/common/utils";
 import { useEffect, useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const movieInputs: InputItem[] = [
   { label: "이름", key: "name", type: "text", required: true },
@@ -39,13 +41,23 @@ const directorReducer = (
 };
 
 const DirectorFormPage = () => {
+  const navigate = useNavigate();
   const [form, dispatch] = useReducer(directorReducer, directorInitialForm);
   const [subDisabled, setSubDisabled] = useState<boolean>(true);
-  const [image, setImage] = useState<string>("");
 
   const handleSubmitDirector = async () => {
     //입력값 확인
     //api 요청 에러처리
+    try {
+      Director.parse(form);
+      const res = await postDirector();
+      if(res.pass){
+        console.log(res.data);
+        navigate('/');
+      }
+    }catch (error){
+      console.log(error);
+    }
   };
 
   useEffect(() => {

@@ -52,7 +52,7 @@ const ReviewList = () => {
     <div>
       <h3 className="text-2xl font-bold mb-[20px]">리뷰</h3>
       <div className="w-md mb-[30px]">
-        <ReviewForm type="create" onSubmit={()=>{}}/>
+        <ReviewForm type="create"/>
       </div>
       {
         isLoading && <SkeletonReviewList />

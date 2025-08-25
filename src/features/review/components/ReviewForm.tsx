@@ -4,11 +4,13 @@ import CustomButton from "@/common/components/CustomButton";
 import CustomInput from "@/common/components/CustomInput";
 import type { ReviewAction, ReviewCreateState } from "@review/types";
 import RatingButton from "./RatingButton";
+import { Review } from "@/common/schema/review.schema";
+import { postReview } from "../services/reviewAPI";
 
 const reviewInitialForm:ReviewCreateState = {
-  writer: '',
+  name: '',
   rating: 0,
-  detail: '',
+  review: '',
 }
 
 const reviewReducer = (state:ReviewCreateState, action:ReviewAction) => {
@@ -23,14 +25,21 @@ const reviewReducer = (state:ReviewCreateState, action:ReviewAction) => {
   }
 }
 
-const ReviewForm = ({onSubmit, type}:{type: 'edit' | 'create',onSubmit:()=>void}) => {
+const ReviewForm = ({type}:{type: 'edit' | 'create'}) => {
   const [form, dispatch] = useReducer(reviewReducer, reviewInitialForm);
 
-  const handleSubmitReview = () => {
+  const handleSubmitReview = async () => {
     //입력값 확인
     //api 요청 에러처리
-    onSubmit()
-    console.log('api 요청');
+    try{
+      Review.parse(form);
+      const res = await postReview();
+      if(res.pass){
+
+      }
+    }catch(error){
+      console.log(error)
+    }
   }
   
   return (
