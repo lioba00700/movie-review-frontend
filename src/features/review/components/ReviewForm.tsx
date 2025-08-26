@@ -1,4 +1,5 @@
-//2025.08.21
+//2025.08.26 모달 컴포넌트와 연동 - 박민서
+//2025.08.21 리뷰 폼 컴포넌트 - 박민서
 import { useEffect, useReducer } from "react";
 import CustomButton from "@/common/components/CustomButton";
 import CustomInput from "@/common/components/CustomInput";

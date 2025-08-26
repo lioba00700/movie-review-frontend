@@ -1,7 +1,6 @@
 //2025.08.25 영화 관련 API 요청 - 박민서
 import { axiosInstance } from "@/common/axiosInstance";
 import type { MovieCreateState } from "../types";
-import { object } from "zod";
 
 //영화 게시판 목록 조회
 export const getMovieList = async () => {
