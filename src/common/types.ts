@@ -16,6 +16,7 @@ export type ThemeState = {
 
 export type FormAction =
   | { type: "CHAGNE"; payload: { key: string; value: string | File | null } }
+  | { type: "CHANGE_GENRE"; genre: string}
   | { type: "RESET" };
 
 export type ModalState = {

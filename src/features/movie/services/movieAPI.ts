@@ -50,6 +50,12 @@ export const postMovie = async (movie: MovieCreateState) => {
       formData.append("images", value as File);
       return;
     }
+    else if (key ==="movie_genre"){
+      const genres = movie.movie_genre.join(", ");
+      console.log(genres);
+      formData.append(key, genres);
+      return;
+    }
     formData.append(key, value as string);
   });
   try {

@@ -35,7 +35,7 @@ export type MovieCreateState = {
   movie_time: string;
   movie_director: string;
   movie_cast_list: string;
-  movie_genre: string;
+  movie_genre: string[];
   movie_description: string;
   movie_image: File | null;
 };

@@ -8,6 +8,7 @@ import { formatDate } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
 import { Movie } from "@/common/schema/movie.schema";
 import { useNavigate } from "react-router-dom";
+import GenreSelect from "./GenreSelect";
 
 const movieInputs: InputItem[] = [
   { label: "제목", key: "movie_name", type: "text", required: true },
@@ -22,7 +23,7 @@ const movieInputs: InputItem[] = [
 const movieInitialForm: MovieCreateState = {
   movie_image: null,
   movie_name: "",
-  movie_genre: "",
+  movie_genre: [],
   movie_date: formatDate(new Date()),
   movie_time: "02:28:00",
   movie_director: "",
@@ -37,6 +38,12 @@ const movieReducer = (state: MovieCreateState, action: FormAction) => {
         ...state,
         [action.payload.key]: action.payload.value,
       };
+    case "CHANGE_GENRE":
+      return {
+        ...state,
+        movie_genre: state.movie_genre.includes(action.genre) ? state.movie_genre.filter((genre)=> genre !== action.genre) : [...state.movie_genre, action.genre]
+      }
+
     case "RESET":
       return movieInitialForm;
   }
@@ -88,8 +95,9 @@ const MovieForm = ({
           })
         }
       />
-      {movieInputs.map(input => (
-        <CustomInput
+      {movieInputs.map(input => {
+        if(input.key==='movie_genre')return <GenreSelect required={input.required} />
+        return <CustomInput
           key={input.key}
           label={input.label}
           required={input.required}
@@ -106,7 +114,7 @@ const MovieForm = ({
             ] as string
           }
         />
-      ))}
+        })}
       <CustomButton
         value="등록"
         onClick={handleSubmitMovie}

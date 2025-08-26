@@ -12,8 +12,8 @@ const CustomInput = ({label, required, type, value, onChange}:CustomInput) => {
   return (
     <div className="flex flex-col gap-[5px] mb-[15px]">
       <label className="font-semibold">
+        {required && <span className="mr-[5px] text-red-600">*</span> } 
         {label}
-        {required && <span className="ml-[5px] text-red-600">*</span> } 
       </label>
       <input
         className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400" 

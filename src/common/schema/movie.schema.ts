@@ -4,7 +4,7 @@ import {z} from 'zod';
 export const Movie = z.object({
     movie_image: z.instanceof(File),
     movie_name: z.string().min(1),
-    movie_genre: z.string(),
+    movie_genre: z.string().array().min(1),
     movie_date: z.string().min(10),
     movie_time: z.string(),
     movie_director: z.string(),

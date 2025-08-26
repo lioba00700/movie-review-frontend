@@ -22,8 +22,8 @@ const ImageUploader = ({value, onChange, type, label, required}:{value: File | n
   return(
     <>
       <label className="font-semibold">
+        {required && <span className="mr-[5px] text-red-600">*</span> } 
         {label}
-        {required && <span className="ml-[5px] text-red-600">*</span> } 
       </label>
       <div 
         className={`${type==='poster' ? "aspect-[1/1.4]" : "aspect-[1/1]"} flex transition-all items-center justify-center bg-gray-300 hover:bg-gray-400 outline-none  rounded-lg cursor-pointer dark:bg-gray-500/40 overflow-hidden mb-[15px] group relative`}
