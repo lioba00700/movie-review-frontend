@@ -60,7 +60,9 @@ const MovieForm = ({
       if (res.pass) {
         navigate("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {

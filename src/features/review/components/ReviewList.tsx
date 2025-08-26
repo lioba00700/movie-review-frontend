@@ -55,7 +55,7 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
     <div>
       <h3 className="text-2xl font-bold mb-[20px]">리뷰</h3>
       <div className="w-md mb-[30px]">
-        <ReviewForm type="create" />
+        <ReviewForm type="create" movieId={movieId} />
       </div>
       {isLoading && <SkeletonReviewList />}
       <ul className="flex flex-col gap-[20px] w-[60%] min-w-xl">
