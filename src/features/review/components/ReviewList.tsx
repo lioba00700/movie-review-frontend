@@ -1,3 +1,4 @@
+//2025.08.26 API 연결 - 박민서
 //2025.08.22 스켈레톤 UI 적용 - 박민서
 //2025.08.21 리뷰 목록 컴포넌트 - 박민서
 import { useEffect } from "react";
@@ -7,78 +8,73 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import SkeletonReviewList from "./SkeletonReviewList";
+import { getReviewList } from "../services/reviewAPI";
+import type { Review } from "../types";
 
-const ReviewList = () => {
-  const {ref, inView} = useInView();
+const ReviewList = ({ movieId }: { movieId: number }) => {
+  const { ref, inView } = useInView();
 
-  const fetchReview =  async (pageParam:number) => {
-    //무한 스크롤 구현 위한 mock 함수
-    const pageSize = 5;
-    await new Promise((resolve)=>setTimeout(resolve, 500));
-    
-    //페이지 크기만큼 예시 데이터 불러옴
-    const reviews = Array.from({length: pageSize}).map((_, index) => ({
-      id: pageParam*pageSize + index,
-      writer: `작성자${pageParam*pageSize + index}`
-    }))
+  const fetchReview = async (pageParam: number) => {
+    const res = await getReviewList(movieId);
+    if (res.pass) {
+      const reviews = res.data;
+
+      return {
+        reviews,
+        nextCursor: undefined,
+      };
+    }
 
     return {
-      reviews,
-      nextCursor: pageParam<7 ? pageParam + 1 : undefined
-    }
-  }
+      reviews: [],
+      nextCusor: undefined,
+    };
+  };
 
   const {
     data,
-    error,   
-    isLoading, 
+    error,
+    isLoading,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ['movies'],
-    queryFn: ({pageParam})=>fetchReview(pageParam),
+    queryKey: ["reviews"],
+    queryFn: ({ pageParam }) => fetchReview(pageParam),
     initialPageParam: 1,
-    getNextPageParam:(lastPage) => lastPage.nextCursor,
+    getNextPageParam: lastPage => lastPage.nextCursor,
   });
 
-  useEffect(()=>{
-    if(inView && !isFetchingNextPage && hasNextPage){
+  useEffect(() => {
+    if (inView && !isFetchingNextPage && hasNextPage) {
       fetchNextPage();
     }
-  },[inView, isFetchingNextPage, hasNextPage]);
+  }, [inView, isFetchingNextPage, hasNextPage]);
 
   return (
     <div>
       <h3 className="text-2xl font-bold mb-[20px]">리뷰</h3>
       <div className="w-md mb-[30px]">
-        <ReviewForm type="create"/>
+        <ReviewForm type="create" />
       </div>
-      {
-        isLoading && <SkeletonReviewList />
-      }
+      {isLoading && <SkeletonReviewList />}
       <ul className="flex flex-col gap-[20px] w-[60%] min-w-xl">
-        {
-          data?.pages.map((group,i)=>(
-            <React.Fragment key={i}>
-              {
-                group.reviews?.map((review)=>(
-                  <ReviewItem key={review.id}/>
-                ))
-              }
-            </React.Fragment>
-          ))
-        }
+        {data?.pages.map((group, i) => (
+          <React.Fragment key={i}>
+            {group.reviews?.map((review: Review) => (
+              <ReviewItem
+                key={review.reviewId}
+                name={review.name}
+                review={review.review}
+                rating={review.rating}
+              />
+            ))}
+          </React.Fragment>
+        ))}
       </ul>
-      {
-        isFetchingNextPage ? (
-          <SkeletonReviewList />
-        ) : (
-          <div ref={ref}></div>
-        )
-      }
+      {isFetchingNextPage ? <SkeletonReviewList /> : <div ref={ref}></div>}
     </div>
-  )
-}
+  );
+};
 
 export default ReviewList;

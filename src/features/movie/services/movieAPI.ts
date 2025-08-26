@@ -6,7 +6,6 @@ import type { MovieCreateState } from "../types";
 export const getMovieList = async () => {
   try {
     const res = await axiosInstance.get("/movie/list");
-    console.log(res);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };

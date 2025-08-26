@@ -6,7 +6,7 @@ import type { ReviewCreateState } from "../types";
 export const getReviewList = async (movieId: number) => {
   try {
     const res = await axiosInstance.get(`/review/all/${movieId}`);
-    return { pass: true, data: res.data };
+    return { pass: true, data: res.data[0].movieReviewList };
   } catch (error) {
     return { pass: false, data: error };
   }

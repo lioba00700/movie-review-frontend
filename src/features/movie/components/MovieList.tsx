@@ -1,10 +1,10 @@
+//2025.08.26 API 연결 - 박민서
 //2025.08.22 스켈레톤 UI 적용
 //2025.08.21 영화 목록 컴포넌트
 import { useEffect } from "react";
 import MovieItem from "./MovieItem";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
 import SkeletonMovieList from "./SkeletonMovieList";
 import { getMovieList } from "../services/movieAPI";
 import BackToTopButton from "@/common/components/BackToTopButton";
@@ -13,8 +13,6 @@ const MovieList = () => {
   const { ref, inView } = useInView();
 
   const fetchPage = async (pageParam: number) => {
-    //무한 스크롤 구현 위한 mock 함수
-
     const res = await getMovieList();
     if (res.pass) {
       const movies = res.data;
@@ -61,7 +59,7 @@ const MovieList = () => {
           <div key={i}>
             {group.movies?.map(
               (movie: {
-                id: number;
+                movie_id: number;
                 movie_image: string;
                 movie_name: string;
                 movie_director: string;
@@ -72,13 +70,14 @@ const MovieList = () => {
                 movie_date: string;
               }) => (
                 <MovieItem
-                  key={movie.id}
-                  id={movie.id}
-                  poster={`${import.meta.env.VITE_SERVER_API}${movie.movie_image}`}
-                  title={movie.movie_name}
-                  genre={movie.movie_genre}
-                  releaseAt={movie.movie_date}
-                  director={movie.movie_director}
+                  key={movie.movie_id}
+                  movie_id={movie.movie_id}
+                  movie_rating={movie.movie_rating}
+                  movie_image={`${import.meta.env.VITE_SERVER_API}${movie.movie_image}`}
+                  movie_name={movie.movie_name}
+                  movie_genre={movie.movie_genre}
+                  movie_date={movie.movie_date}
+                  movie_director={movie.movie_director}
                 />
               ),
             )}

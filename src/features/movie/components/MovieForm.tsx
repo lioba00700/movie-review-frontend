@@ -58,7 +58,6 @@ const MovieForm = ({onSubmit}: {onSubmit:()=>void}) => {
       }
 
     }catch(error){
-      console.log(error);
     }
   };
 

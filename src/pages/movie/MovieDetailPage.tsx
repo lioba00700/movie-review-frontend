@@ -15,7 +15,6 @@ const MovieDetailPage = () => {
     const getMovie = async () => {
       const res = await getMovieDetail(Number(movieId));
       if (res.pass) {
-        console.log(res.data);
         setMovie(res.data);
       }
     };
@@ -24,17 +23,25 @@ const MovieDetailPage = () => {
 
   return (
     <div className="w-full h-full dark:text-white">
-      <MovieDetail
-        title={"movie?.title"}
-        genre="호러"
-        releaseAt="2025-05-05"
-        director="홍길동"
-        explan="영화설명"
-        poster=""
-      />
-      <div className="p-[50px] dark:bg-black">
-        <ReviewList />
-      </div>
+      {!movie ? (
+        <p>불러오는중</p>
+      ) : (
+        <>
+          <MovieDetail
+            movie_id={movie.movie_id}
+            movie_name={movie.movie_name}
+            movie_genre={movie.movie_genre}
+            movie_date={movie.movie_date}
+            movie_director={movie.movie_director}
+            movie_description={movie.movie_description}
+            movie_image={`${import.meta.env.VITE_SERVER_API}${movie.movie_image}`}
+            movie_rating={movie.movie_rating}
+          />
+          <div className="p-[50px] dark:bg-black">
+            <ReviewList movieId={movie.movie_id} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

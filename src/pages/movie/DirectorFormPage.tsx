@@ -51,13 +51,10 @@ const DirectorFormPage = () => {
     try {
       Director.parse(form);
       const res = await postDirector();
-      if(res.pass){
-        console.log(res.data);
-        navigate('/');
+      if (res.pass) {
+        navigate("/");
       }
-    }catch (error){
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
