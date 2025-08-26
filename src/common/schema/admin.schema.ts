@@ -1,5 +1,5 @@
 //2025.08.25 관리자 등록 validation 스키마 정의 - 박민서
-import { regex, z } from "zod";
+import { z } from "zod";
 
 export const Admin = z
   .object({
