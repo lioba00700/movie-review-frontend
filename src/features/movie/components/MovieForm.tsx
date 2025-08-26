@@ -24,7 +24,7 @@ const movieInitialForm: MovieCreateState = {
   movie_name: "",
   movie_genre: "",
   movie_date: formatDate(new Date()),
-  movie_time: "",
+  movie_time: "02:28:00",
   movie_director: "",
   movie_cast_list: "",
   movie_description: "",
@@ -42,7 +42,11 @@ const movieReducer = (state: MovieCreateState, action: FormAction) => {
   }
 };
 
-const MovieForm = ({onSubmit}: {onSubmit:()=>void}) => {
+const MovieForm = ({
+  onSubmit,
+}: {
+  onSubmit: (form: MovieCreateState) => Promise<{ pass: boolean; data: any }>;
+}) => {
   const navigate = useNavigate();
   const [form, dispatch] = useReducer(movieReducer, movieInitialForm);
   const [subDisabled, setSubDisabled] = useState<boolean>(true);
@@ -50,15 +54,13 @@ const MovieForm = ({onSubmit}: {onSubmit:()=>void}) => {
   const handleSubmitMovie = async () => {
     //입력값 확인
     //api 요청 에러처리
-    try{
+    try {
       Movie.parse(form);
-      const res = await onSubmit();
-      if(res.pass){
-        navigate('/');
+      const res = await onSubmit(form);
+      if (res.pass) {
+        navigate("/");
       }
-
-    }catch(error){
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
