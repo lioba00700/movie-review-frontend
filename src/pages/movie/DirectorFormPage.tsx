@@ -5,6 +5,7 @@ import ImageUploader from "@/common/components/ImageUploader";
 import { Director } from "@/common/schema/director.schema";
 import type { FormAction, InputItem } from "@/common/types";
 import { formatDate } from "@/common/utils";
+import type { DirectorState } from "@/features/movie/types";
 import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,20 +14,16 @@ const movieInputs: InputItem[] = [
   { label: "생년월일", key: "birth", type: "date", required: true },
 ];
 
-type directorState = {
-  profile: File | null;
-  name: string;
-  birth: string;
-};
 
-const directorInitialForm: directorState = {
+
+const directorInitialForm: DirectorState = {
   profile: null,
   name: "",
   birth: formatDate(new Date()),
 };
 
 const directorReducer = (
-  state: { profile: File | null; name: string; birth: string },
+  state: DirectorState,
   action: FormAction,
 ) => {
   switch (action.type) {
@@ -37,6 +34,8 @@ const directorReducer = (
       };
     case "RESET":
       return directorInitialForm;
+    default:
+      return state
   }
 };
 
@@ -50,7 +49,7 @@ const DirectorFormPage = () => {
     //api 요청 에러처리
     try {
       Director.parse(form);
-      const res = await postDirector();
+      const res = await postDirector(form);
       if (res.pass) {
         navigate("/");
       }
@@ -97,7 +96,7 @@ const DirectorFormPage = () => {
           }
           value={
             form[
-              input.key as Exclude<keyof directorState, typeof File | null>
+              input.key as Exclude<keyof DirectorState, typeof File | null>
             ] as string
           }
         />

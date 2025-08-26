@@ -61,9 +61,7 @@ export const postMovie = async (movie: MovieCreateState) => {
   try {
     const res = await axiosInstance.post(
       `/movie`,
-      {
         formData,
-      },
       {
         headers: {
           "Content-Type": "multipart/form-data",

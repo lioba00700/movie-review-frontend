@@ -39,3 +39,9 @@ export type MovieCreateState = {
   movie_description: string;
   movie_image: File | null;
 };
+
+export type DirectorState = {
+  profile: File | null;
+  name: string;
+  birth: string;
+};
