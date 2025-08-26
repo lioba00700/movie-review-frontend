@@ -1,7 +1,7 @@
 //2025.08.26 API 연결 - 박민서
 //2025.08.22 스켈레톤 UI 적용 - 박민서
 //2025.08.21 리뷰 목록 컴포넌트 - 박민서
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReviewItem from "./ReviewItem";
 import ReviewForm from "./ReviewForm";
 import { useInView } from "react-intersection-observer";
@@ -13,6 +13,10 @@ import type { Review } from "../types";
 
 const ReviewList = ({ movieId }: { movieId: number }) => {
   const { ref, inView } = useInView();
+
+  const handleChange = () => {
+    refetch();
+  };
 
   const fetchReview = async (pageParam: number) => {
     const res = await getReviewList(movieId);
@@ -33,10 +37,10 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
 
   const {
     data,
-    error,
     isLoading,
     isFetchingNextPage,
     hasNextPage,
+    refetch,
     fetchNextPage,
   } = useInfiniteQuery({
     queryKey: ["reviews"],
@@ -55,7 +59,11 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
     <div>
       <h3 className="text-2xl font-bold mb-[20px]">리뷰</h3>
       <div className="w-md mb-[30px]">
-        <ReviewForm type="create" movieId={movieId} />
+        <ReviewForm
+          type="create"
+          movieId={movieId}
+          handleChange={handleChange}
+        />
       </div>
       {isLoading && <SkeletonReviewList />}
       <ul className="flex flex-col gap-[20px] w-[60%] min-w-xl">
@@ -64,9 +72,11 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
             {group.reviews?.map((review: Review) => (
               <ReviewItem
                 key={review.reviewId}
+                reviewId={review.reviewId}
                 name={review.name}
                 review={review.review}
                 rating={review.rating}
+                handleChange={handleChange}
               />
             ))}
           </React.Fragment>

@@ -1,28 +1,38 @@
 //2025.08.21 모달 상태 관리 로직 - 박민서
 import { create } from "zustand";
 import type { ModalState } from "@/common/types";
+import type { ReviewCreateState } from "@/features/review/types";
 
-const useModalStore = create<ModalState>((set)=>({
+const useModalStore = create<ModalState>(set => ({
   modal: {
     isOpen: false,
-    type: 'confirm',
-    message: '',
-    onSubmit: ()=>{}
+    type: "confirm",
+    message: "",
+    onSubmit: () => {},
+    movieId: null,
+    reviewId: null,
   },
-  handleModal: ({type, message}) => set((state)=>({
-    modal:{
-      ...state.modal,
-      isOpen:true,
-      type,
-      message
-    }
-  })),
-  closeModal: () => set((state)=>({
-    modal: {
-      ...state.modal,
-      isOpen: false
-    }
-  }))
-}))
+  handleModal: ({ type, message, onSubmit, movieId, reviewId }) =>
+    set(state => ({
+      modal: {
+        ...state.modal,
+        isOpen: true,
+        type,
+        message,
+        onSubmit,
+        movieId,
+        reviewId,
+      },
+    })),
+  closeModal: () =>
+    set(state => ({
+      modal: {
+        ...state.modal,
+        isOpen: false,
+        movieId: null,
+        reviewId: null,
+      },
+    })),
+}));
 
 export default useModalStore;

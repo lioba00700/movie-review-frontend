@@ -1,11 +1,11 @@
 //2025.08.21
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import CustomButton from "@/common/components/CustomButton";
 import CustomInput from "@/common/components/CustomInput";
 import type { ReviewAction, ReviewCreateState } from "@review/types";
 import RatingButton from "./RatingButton";
-import { Review } from "@/common/schema/review.schema";
-import { postReview } from "../services/reviewAPI";
+import { ReviewSchema } from "@/common/schema/review.schema";
+import { getReviewDetail, postReview } from "../services/reviewAPI";
 
 const reviewInitialForm: ReviewCreateState = {
   name: "",
@@ -25,21 +25,58 @@ const reviewReducer = (state: ReviewCreateState, action: ReviewAction) => {
   }
 };
 
-const ReviewForm = ({ type, movieId }: { type: "edit" | "create", movieId: number }) => {
+const ReviewForm = ({
+  type,
+  movieId,
+  reviewId,
+  closeModal,
+  handleChange,
+  onSubmit,
+}: {
+  type: "edit" | "create";
+  movieId?: number;
+  reviewId?: number;
+  closeModal?: () => void;
+  handleChange?: () => void;
+  onSubmit?: (form: ReviewCreateState) => void;
+}) => {
   const [form, dispatch] = useReducer(reviewReducer, reviewInitialForm);
 
   const handleSubmitReview = async () => {
     //입력값 확인
     //api 요청 에러처리
     try {
-      Review.parse(form);
-      const res = await postReview(movieId, form);
-      if (res.pass) {
+      ReviewSchema.parse(form);
+      //리뷰 등록\
+      if (type === "create" && movieId && handleChange) {
+        const res = await postReview(movieId, form);
+        if (res.pass) {
+          dispatch({ type: "RESET" });
+          handleChange();
+        }
+        //리뷰 수정
+      } else if (type === "edit" && onSubmit && closeModal) {
+        onSubmit(form);
+        closeModal();
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (type == "create") return;
+    const getReview = async () => {
+      const res = await getReviewDetail(movieId as number, reviewId as number);
+      console.log(res.data);
+      if (res.pass) {
+        Object.keys(form).map(key =>
+          dispatch({ type: "CHAGNE", payload: { key, value: res.data[key] } }),
+        );
+      }
+    };
+    getReview();
+  }, [movieId]);
 
   return (
     <div>

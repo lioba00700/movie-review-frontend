@@ -1,4 +1,4 @@
-//2025.08.25 영화 스키마 정의 - 박민서
+//2025.08.25 영화 validation 스키마 정의 - 박민서
 import {z} from 'zod';
 
 export const Movie = z.object({
