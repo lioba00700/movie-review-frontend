@@ -1,3 +1,4 @@
+//2025.0827 영화 등록 폼 수정 (장르 체크박스, )
 //2025.08.22 날짜 포맷 적용 및 필수 입력 표시 - 박민서
 import { useEffect, useReducer, useState } from "react";
 import CustomInput from "@/common/components/CustomInput";
@@ -9,6 +10,7 @@ import ImageUploader from "@/common/components/ImageUploader";
 import { Movie } from "@/common/schema/movie.schema";
 import { useNavigate } from "react-router-dom";
 import GenreSelect from "./GenreSelect";
+import CastListInput from "./CastListInput";
 
 const movieInputs: InputItem[] = [
   { label: "제목", key: "movie_name", type: "text", required: true },
@@ -17,7 +19,12 @@ const movieInputs: InputItem[] = [
   { label: "상영시간", key: "movie_time", type: "time", required: true },
   { label: "감독", key: "movie_director", type: "text", required: true },
   { label: "출연진", key: "movie_cast_list", type: "text", required: true },
-  { label: "줄거리", key: "movie_description", type: "text", required: true },
+  {
+    label: "줄거리",
+    key: "movie_description",
+    type: "textarea",
+    required: true,
+  },
 ];
 
 const movieInitialForm: MovieCreateState = {
@@ -27,7 +34,7 @@ const movieInitialForm: MovieCreateState = {
   movie_date: formatDate(new Date()),
   movie_time: "02:28:00",
   movie_director: "",
-  movie_cast_list: "",
+  movie_cast_list: [],
   movie_description: "",
 };
 
@@ -38,11 +45,15 @@ const movieReducer = (state: MovieCreateState, action: FormAction) => {
         ...state,
         [action.payload.key]: action.payload.value,
       };
-    case "CHANGE_GENRE":
+    case "CHANGE_LIST":
+      console.log(state.movie_cast_list);
+      const key = action.payload.key as "movie_genre" | "movie_cast_list";
       return {
         ...state,
-        movie_genre: state.movie_genre.includes(action.genre) ? state.movie_genre.filter((genre)=> genre !== action.genre) : [...state.movie_genre, action.genre]
-      }
+        [action.payload.key]: state[key].includes(action.payload.value)
+          ? state[key].filter(item => item !== action.payload.value)
+          : [...state[key], action.payload.value],
+      };
 
     case "RESET":
       return movieInitialForm;
@@ -68,7 +79,7 @@ const MovieForm = ({
         navigate("/");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -96,25 +107,81 @@ const MovieForm = ({
         }
       />
       {movieInputs.map(input => {
-        if(input.key==='movie_genre')return <GenreSelect required={input.required} />
-        return <CustomInput
-          key={input.key}
-          label={input.label}
-          required={input.required}
-          type={input.type}
-          onChange={e =>
-            dispatch({
-              type: "CHAGNE",
-              payload: { key: input.key, value: e.target.value },
-            })
-          }
-          value={
-            form[
-              input.key as Exclude<keyof MovieCreateState, typeof File | null>
-            ] as string
-          }
-        />
-        })}
+        if (input.key === "movie_genre")
+          return (
+            <GenreSelect
+              key={input.key}
+              required={input.required}
+              onChange={genre =>
+                dispatch({
+                  type: "CHANGE_LIST",
+                  payload: { key: "movie_genre", value: genre },
+                })
+              }
+            />
+          );
+        else if (input.key === "movie_cast_list")
+          return (
+            <CastListInput
+              key={input.key}
+              required={input.required}
+              castList={form[input.key]}
+              onChange={cast =>
+                dispatch({
+                  type: "CHANGE_LIST",
+                  payload: { key: input.key, value: cast },
+                })
+              }
+            />
+          );
+        else if (input.type === "textarea")
+          return (
+            <div className="flex flex-col gap-[5px] mb-[15px]" key={input.key}>
+              <label className="font-semibold">
+                {input.required && (
+                  <span className="mr-[5px] text-red-600">*</span>
+                )}
+                {input.label}
+              </label>
+              <textarea
+                className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400"
+                value={
+                  form[
+                    input.key as Exclude<
+                      keyof MovieCreateState,
+                      typeof File | null
+                    >
+                  ] as string
+                }
+                onChange={e =>
+                  dispatch({
+                    type: "CHAGNE",
+                    payload: { key: input.key, value: e.target.value },
+                  })
+                }
+              />
+            </div>
+          );
+        return (
+          <CustomInput
+            key={input.key}
+            label={input.label}
+            required={input.required}
+            type={input.type}
+            onChange={e =>
+              dispatch({
+                type: "CHAGNE",
+                payload: { key: input.key, value: e.target.value },
+              })
+            }
+            value={
+              form[
+                input.key as Exclude<keyof MovieCreateState, typeof File | null>
+              ] as string
+            }
+          />
+        );
+      })}
       <CustomButton
         value="등록"
         onClick={handleSubmitMovie}

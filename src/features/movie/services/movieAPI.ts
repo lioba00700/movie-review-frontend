@@ -49,25 +49,20 @@ export const postMovie = async (movie: MovieCreateState) => {
     if (key === "movie_image") {
       formData.append("images", value as File);
       return;
-    }
-    else if (key ==="movie_genre"){
-      const genres = movie.movie_genre.join(", ");
-      console.log(genres);
-      formData.append(key, genres);
+    } else if (key === "movie_genre" || key === "movie_cast_list") {
+      const list = movie[key].join(", ");
+      console.log(list);
+      formData.append(key, list);
       return;
     }
     formData.append(key, value as string);
   });
   try {
-    const res = await axiosInstance.post(
-      `/movie`,
-        formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    const res = await axiosInstance.post(`/movie`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    );
+    });
     console.log(res.data);
     return { pass: true, data: res.data };
   } catch (error) {
