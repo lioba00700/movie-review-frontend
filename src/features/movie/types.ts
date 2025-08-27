@@ -34,14 +34,14 @@ export type MovieCreateState = {
   movie_date: string;
   movie_time: string;
   movie_director: string;
-  movie_cast_list: string;
+  movie_cast_list: string[];
   movie_genre: string[];
   movie_description: string;
   movie_image: File | null;
 };
 
 export type DirectorState = {
-  profile: File | null;
+  director_images: File | null;
   name: string;
-  birth: string;
+  birthDay: string;
 };

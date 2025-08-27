@@ -5,27 +5,23 @@ import ImageUploader from "@/common/components/ImageUploader";
 import { Director } from "@/common/schema/director.schema";
 import type { FormAction, InputItem } from "@/common/types";
 import { formatDate } from "@/common/utils";
+import { postDirector } from "@/features/movie/services/directorAPI";
 import type { DirectorState } from "@/features/movie/types";
 import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const movieInputs: InputItem[] = [
   { label: "이름", key: "name", type: "text", required: true },
-  { label: "생년월일", key: "birth", type: "date", required: true },
+  { label: "생년월일", key: "birthDay", type: "date", required: true },
 ];
 
-
-
 const directorInitialForm: DirectorState = {
-  profile: null,
+  director_images: null,
   name: "",
-  birth: formatDate(new Date()),
+  birthDay: formatDate(new Date()),
 };
 
-const directorReducer = (
-  state: DirectorState,
-  action: FormAction,
-) => {
+const directorReducer = (state: DirectorState, action: FormAction) => {
   switch (action.type) {
     case "CHAGNE":
       return {
@@ -35,7 +31,7 @@ const directorReducer = (
     case "RESET":
       return directorInitialForm;
     default:
-      return state
+      return state;
   }
 };
 
@@ -74,11 +70,14 @@ const DirectorFormPage = () => {
         type="profile"
         label="프로필 이미지"
         required={true}
-        value={form.profile}
+        value={form.director_images}
         onChange={e =>
           dispatch({
             type: "CHAGNE",
-            payload: { key: "profile", value: e.target.files?.[0] || null },
+            payload: {
+              key: "director_images",
+              value: e.target.files?.[0] || null,
+            },
           })
         }
       />

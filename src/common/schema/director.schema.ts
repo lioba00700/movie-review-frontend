@@ -2,7 +2,7 @@
 import { z } from "zod";
 
 export const Director = z.object({
-  profile: z.instanceof(File),
+  director_images: z.instanceof(File),
   name: z.string().min(1),
-  birth: z.string().min(10),
+  birthDay: z.string().min(10),
 });
