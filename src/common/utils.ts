@@ -7,3 +7,10 @@ export const formatDate = (date: Date): string => {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+//시간 포맷; hh:mm:ss
+export const formatTime = (time:string): string => {
+  const formattedTime = time.replace(/\D/g,"").slice(0,6).replace(/^(\d{0,2})(\d{0,2})(\d{0,2})$/g, "$1:$2:$3");
+
+  return formattedTime;
+}

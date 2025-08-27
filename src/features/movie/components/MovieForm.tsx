@@ -5,7 +5,7 @@ import CustomInput from "@/common/components/CustomInput";
 import type { MovieCreateState } from "@movie/types";
 import type { FormAction, InputItem } from "@/common/types";
 import CustomButton from "@/common/components/CustomButton";
-import { formatDate } from "@/common/utils";
+import { formatDate, formatTime } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
 import { Movie } from "@/common/schema/movie.schema";
 import { useNavigate } from "react-router-dom";
@@ -41,18 +41,19 @@ const movieInitialForm: MovieCreateState = {
 const movieReducer = (state: MovieCreateState, action: FormAction) => {
   switch (action.type) {
     case "CHAGNE":
+      const {key, value} = action.payload;
       return {
         ...state,
-        [action.payload.key]: action.payload.value,
+        [key]: key==='movie_time' ? formatTime(value as string) : value,
       };
     case "CHANGE_LIST":
       console.log(state.movie_cast_list);
-      const key = action.payload.key as "movie_genre" | "movie_cast_list";
+      const listKey = action.payload.key as "movie_genre" | "movie_cast_list";
       return {
         ...state,
-        [action.payload.key]: state[key].includes(action.payload.value)
-          ? state[key].filter(item => item !== action.payload.value)
-          : [...state[key], action.payload.value],
+        [action.payload.key]: state[listKey].includes(action.payload.value)
+          ? state[listKey].filter(item => item !== action.payload.value)
+          : [...state[listKey], action.payload.value],
       };
 
     case "RESET":
