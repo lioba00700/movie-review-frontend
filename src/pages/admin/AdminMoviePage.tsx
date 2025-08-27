@@ -1,8 +1,10 @@
 //2025.08.25 관리자 영화 데이터 관리 화면 - 박민서
 import CustomButton from "@/common/components/CustomButton";
 import PaginationButton from "@/common/components/PaginationButton";
-import { getMovieList } from "@/features/movie/services/movieAPI";
+import useModal from "@/common/hooks/useModal";
+import { getMovieList, patchMovie } from "@/features/movie/services/movieAPI";
 import type { Movie } from "@/features/movie/types";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,18 +19,27 @@ const tableHeader = [
 
 const AdminMoviePage = () => {
   const navigate = useNavigate();
-  const [movies, setMovies] = useState<Movie[]>();
+  const {handleModal} = useModal();
 
-  useEffect(() => {
-    const getMovies = async () => {
-      const res = await getMovieList();
-      if (res.pass) {
-        setMovies(res.data);
-        console.log(res.data);
-      }
-    };
-    getMovies();
-  }, []);
+  const fetchMovies = async () => {
+    const res = await getMovieList();
+    if (res.pass) {
+      return res.data;
+    }
+  };
+
+  const { data, refetch, isFetching } = useQuery({
+    queryKey: ["movie_admin"],
+    queryFn: () => fetchMovies(),
+  });
+
+  const handleSubmitDelete = async (id: number) => {
+    const res = await patchMovie(id);
+    if (res.pass) {
+      refetch();
+    }
+  };
+  console.log(data);
 
   return (
     <div className="pt-[90px] p-[50px] dark:text-white dark:bg-black">
@@ -71,7 +82,7 @@ const AdminMoviePage = () => {
           </tr>
         </thead>
         <tbody>
-          {movies?.map(movie => (
+          {data?.map((movie: Movie) => (
             <tr
               key={movie.movie_id}
               className="cursor-pointer hover:bg-gray-200 dark:hover:bg-white/10"
@@ -88,7 +99,13 @@ const AdminMoviePage = () => {
                 <CustomButton
                   value=""
                   icon="delete"
-                  onClick={() => {}}
+                  onClick={() =>
+                    handleModal({
+                      type: "confirm",
+                      message: "정말 삭제하시겠습니까?",
+                      onSubmit: () => handleSubmitDelete(movie.movie_id),
+                    })
+                  }
                   style="bg-red-600 text-white text-sm w-[30px] h-[30px] hover:bg-red-700"
                 />
               </td>
