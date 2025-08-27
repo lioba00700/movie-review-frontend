@@ -43,3 +43,9 @@ export type ModalState = {
   }) => void;
   closeModal: () => void;
 };
+
+export type AdminState = {
+  token: string,
+  login: (token:string) => void,
+  logout: () => void
+}

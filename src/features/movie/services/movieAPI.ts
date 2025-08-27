@@ -1,11 +1,13 @@
 //2025.08.25 영화 관련 API 요청 - 박민서
-import { axiosInstance } from "@/common/axiosInstance";
+import { publicAxios } from "@/common/publicAxios";
 import type { MovieCreateState } from "../types";
+import { adminAxios } from "@/common/adminAxios";
+import useAdminStore from "@/common/store/useAdminStore";
 
 //영화 게시판 목록 조회
 export const getMovieList = async () => {
   try {
-    const res = await axiosInstance.get("/movie/list");
+    const res = await publicAxios.get("/movie/list");
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -15,7 +17,7 @@ export const getMovieList = async () => {
 //영화 게시판 상세 조회
 export const getMovieDetail = async (id: number) => {
   try {
-    const res = await axiosInstance.get(`/movie/${id}`);
+    const res = await publicAxios.get(`/movie/${id}`);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -25,7 +27,7 @@ export const getMovieDetail = async (id: number) => {
 //영화 게시판 수정
 export const putMovie = async (id: number, movie: MovieCreateState) => {
   try {
-    const res = await axiosInstance.put(`/movie/${id}`);
+    const res = await publicAxios.put(`/movie/${id}`);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -35,7 +37,7 @@ export const putMovie = async (id: number, movie: MovieCreateState) => {
 //영화 게시판 삭제
 export const patchMovie = async (id: number) => {
   try {
-    const res = await axiosInstance.patch(`/movie/${id}`);
+    const res = await publicAxios.patch(`/movie/${id}`);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -45,6 +47,7 @@ export const patchMovie = async (id: number) => {
 //영화 게시판 작성
 export const postMovie = async (movie: MovieCreateState) => {
   const formData = new FormData();
+  const token = useAdminStore.getState().token;
   Object.entries(movie).map(([key, value]) => {
     if (key === "movie_image") {
       formData.append("images", value as File);
@@ -58,9 +61,10 @@ export const postMovie = async (movie: MovieCreateState) => {
     formData.append(key, value as string);
   });
   try {
-    const res = await axiosInstance.post(`/movie`, formData, {
+    const res = await publicAxios.post(`/movie`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     });
     console.log(res.data);

@@ -1,6 +1,6 @@
 //2025.08.25 감독 관련 API 요청 - 박민서
 
-import { axiosInstance } from "@/common/axiosInstance";
+import { publicAxios } from "@/common/publicAxios";
 import type { DirectorState } from "../types";
 
 //감독 등록
@@ -14,7 +14,7 @@ export const postDirector = async (director: DirectorState) => {
     formData.append(key, value as string);
   });
   try {
-    const res = await axiosInstance.post("/director", formData, {
+    const res = await publicAxios.post("/director", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -27,7 +27,7 @@ export const postDirector = async (director: DirectorState) => {
 
 export const getDirectors = async () => {
   try {
-    const res = await axiosInstance.get("/movie/list");
+    const res = await publicAxios.get("/movie/list");
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-export const axiosInstance = axios.create({
+export const publicAxios = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API + "/api",
   timeout: 500,
   headers: {
