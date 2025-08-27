@@ -1,3 +1,4 @@
+//2025.08.26 react query 를 적용  - 박민서
 //2025.08.25 관리자 영화 데이터 관리 화면 - 박민서
 import CustomButton from "@/common/components/CustomButton";
 import PaginationButton from "@/common/components/PaginationButton";
@@ -5,7 +6,7 @@ import useModal from "@/common/hooks/useModal";
 import { getMovieList, patchMovie } from "@/features/movie/services/movieAPI";
 import type { Movie } from "@/features/movie/types";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { MdCreate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const tableHeader = [
@@ -19,7 +20,7 @@ const tableHeader = [
 
 const AdminMoviePage = () => {
   const navigate = useNavigate();
-  const {handleModal} = useModal();
+  const { handleModal } = useModal();
 
   const fetchMovies = async () => {
     const res = await getMovieList();
@@ -28,7 +29,7 @@ const AdminMoviePage = () => {
     }
   };
 
-  const { data, refetch, isFetching } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["movie_admin"],
     queryFn: () => fetchMovies(),
   });
@@ -85,7 +86,7 @@ const AdminMoviePage = () => {
           {data?.map((movie: Movie) => (
             <tr
               key={movie.movie_id}
-              className="cursor-pointer hover:bg-gray-200 dark:hover:bg-white/10"
+              className="cursor-pointer hover:bg-gray-200 dark:hover:bg-white/10 group"
             >
               {tableHeader.map(header => {
                 if (header.key === "delete") return;
@@ -109,6 +110,9 @@ const AdminMoviePage = () => {
                   style="bg-red-600 text-white text-sm w-[30px] h-[30px] hover:bg-red-700"
                 />
               </td>
+              <div className="absolute hidden group-hover:flex p-[15px]">
+                <MdCreate size={20} />
+              </div>
             </tr>
           ))}
         </tbody>
