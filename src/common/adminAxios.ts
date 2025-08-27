@@ -2,11 +2,11 @@
 
 import axios, { AxiosError } from "axios";
 import useAdminStore from "./store/useAdminStore";
-import { tokenAdmin } from "./services/AuthAPI";
+import { tokenAdmin } from "./services/authAPI";
 
 export const adminAxios = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API + "/api",
-  timeout: 500,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },

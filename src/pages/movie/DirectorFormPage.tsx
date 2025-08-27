@@ -66,6 +66,9 @@ const DirectorFormPage = () => {
   return (
     <div className="pt-[90px] h-full p-[50px] w-md dark:text-white">
       <h1 className="text-2xl font-bold mb-[30px]">감독 등록</h1>
+      <div className="flex flex-col gap-[10px]">
+
+<div>
       <ImageUploader
         type="profile"
         label="프로필 이미지"
@@ -81,25 +84,34 @@ const DirectorFormPage = () => {
           })
         }
       />
-      {movieInputs.map(input => (
-        <CustomInput
-          key={input.key}
-          label={input.label}
-          required={input.required}
-          type={input.type}
-          onChange={e =>
-            dispatch({
-              type: "CHAGNE",
-              payload: { key: input.key, value: e.target.value },
-            })
-          }
-          value={
-            form[
-              input.key as Exclude<keyof DirectorState, typeof File | null>
-            ] as string
-          }
-        />
-      ))}
+      <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{Director.shape.director_images.safeParse(form.director_images).error?.issues[0].message}</p>
+      </div>
+      {movieInputs.map(input => {
+        const schema = Director.shape[input.key as keyof typeof Director.shape];
+        const error = schema.safeParse(form[input.key as keyof DirectorState]).error?.issues[0].message || null;
+        return (
+          <div>
+            <CustomInput
+              key={input.key}
+              label={input.label}
+              required={input.required}
+              type={input.type}
+              onChange={e =>
+                dispatch({
+                  type: "CHAGNE",
+                  payload: { key: input.key, value: e.target.value },
+                })
+              }
+              value={
+                form[
+                  input.key as Exclude<keyof DirectorState, typeof File | null>
+                ] as string
+              }
+            />
+            <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{error}</p>
+          </div>
+      )})}
+      </div>
       <CustomButton
         value="등록"
         onClick={handleSubmitDirector}

@@ -2,8 +2,9 @@
 //2025.08.25 관리자 로그인 화면 - 박민서
 import CustomButton from "@/common/components/CustomButton";
 import CustomInput from "@/common/components/CustomInput";
+import useAdmin from "@/common/hooks/useAdmin";
 import { Admin } from "@/common/schema/admin.schema";
-import { loginAdmin } from "@/common/services/AuthAPI";
+import { loginAdmin } from "@/common/services/authAPI";
 import type { FormAction } from "@/common/types";
 import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
@@ -34,19 +35,19 @@ const LoginReducer = (state: LoginState, action: FormAction) => {
 
 const AdminLoginPage = () => {
   const navigate = useNavigate();
+  const {login} = useAdmin()
   const [form, dispatch] = useReducer(LoginReducer, loginInitialForm);
 
   const handleSubmitLogin = async () => {
-    //입력값 확인
-    //api 요청 에러처리
     try {
-      Admin.parse(form);
+      const AdminLogin = Admin.pick({username: true, password: true});
+      AdminLogin.parse(form);
       const res = await loginAdmin(form);
       if (res.pass) {
         dispatch({ type: "RESET" });
+        login(res.data);
         navigate("/");
       }
-      //리뷰 수정
     } catch (error) {
       console.log(error);
     }
@@ -55,8 +56,9 @@ const AdminLoginPage = () => {
   return (
     <div className="pt-[90px] pb-[100px] h-screen content-center p-[50px] m-auto w-lg dark:text-white">
       <h1 className="text-3xl font-bold mb-[60px]">관리자 로그인</h1>
+      <div>
       <CustomInput
-        label="ID"
+        label="Username"
         type="text"
         onChange={e =>
           dispatch({
@@ -65,6 +67,9 @@ const AdminLoginPage = () => {
           })
         }
       />
+      <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{Admin.shape.username.safeParse(form.username).error?.issues[0].message}</p>
+              </div>
+              <div>
       <CustomInput
         label="비밀번호"
         type="password"
@@ -75,6 +80,8 @@ const AdminLoginPage = () => {
           })
         }
       />
+      <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{Admin.shape.password.safeParse(form.password).error?.issues[0].message}</p>
+              </div>
       <p
         className="text-sm justify-self-end cursor-pointer p-[10px] hover:text-gray-500"
         onClick={() => navigate("/admin/signup")}

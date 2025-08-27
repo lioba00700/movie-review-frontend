@@ -7,10 +7,11 @@ import type { FormAction, InputItem } from "@/common/types";
 import CustomButton from "@/common/components/CustomButton";
 import { formatDate, formatTime } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
-import { Movie } from "@/common/schema/movie.schema";
+import { MovieSchema } from "@/common/schema/movie.schema";
 import { useNavigate } from "react-router-dom";
 import GenreSelect from "./GenreSelect";
 import CastListInput from "./CastListInput";
+import z from "zod";
 
 const movieInputs: InputItem[] = [
   { label: "제목", key: "movie_name", type: "text", required: true },
@@ -74,13 +75,16 @@ const MovieForm = ({
     //입력값 확인
     //api 요청 에러처리
     try {
-      Movie.parse(form);
+      MovieSchema.parse(form);
       const res = await onSubmit(form);
       if (res.pass) {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      if(error instanceof z.ZodError){
+        console.log(error);
+        
+      }
     }
   };
 
@@ -95,94 +99,111 @@ const MovieForm = ({
 
   return (
     <div className="w-full">
-      <ImageUploader
-        type="poster"
-        label="포스터 이미지"
-        required={true}
-        value={form.movie_image}
-        onChange={e =>
-          dispatch({
-            type: "CHAGNE",
-            payload: { key: "movie_image", value: e.target.files?.[0] || null },
-          })
-        }
-      />
-      {movieInputs.map(input => {
-        if (input.key === "movie_genre")
-          return (
-            <GenreSelect
-              key={input.key}
-              required={input.required}
-              onChange={genre =>
-                dispatch({
-                  type: "CHANGE_LIST",
-                  payload: { key: "movie_genre", value: genre },
-                })
-              }
-            />
-          );
-        else if (input.key === "movie_cast_list")
-          return (
-            <CastListInput
-              key={input.key}
-              required={input.required}
-              castList={form[input.key]}
-              onChange={cast =>
-                dispatch({
-                  type: "CHANGE_LIST",
-                  payload: { key: input.key, value: cast },
-                })
-              }
-            />
-          );
-        else if (input.type === "textarea")
-          return (
-            <div className="flex flex-col gap-[5px] mb-[15px]" key={input.key}>
-              <label className="font-semibold">
-                {input.required && (
-                  <span className="mr-[5px] text-red-600">*</span>
-                )}
-                {input.label}
-              </label>
-              <textarea
-                className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400"
-                value={
-                  form[
-                    input.key as Exclude<
-                      keyof MovieCreateState,
-                      typeof File | null
-                    >
-                  ] as string
-                }
-                onChange={e =>
+      <div className="flex flex-col gap-[10px]">
+        <div>
+        <ImageUploader
+          type="poster"
+          label="포스터 이미지"
+          required={true}
+          value={form.movie_image}
+          onChange={e =>
+            dispatch({
+              type: "CHAGNE",
+              payload: { key: "movie_image", value: e.target.files?.[0] || null },
+            })
+          }
+        />
+        <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{MovieSchema.shape.movie_image.safeParse(form.movie_image).error?.issues[0].message}</p>
+        </div>
+        {movieInputs.map(input => {
+          const schema = MovieSchema.shape[input.key as keyof typeof MovieSchema.shape];
+          const error = schema.safeParse(form[input.key as keyof MovieCreateState]).error?.issues[0].message || null;
+          if (input.key === "movie_genre")
+            return (
+            <div>
+              <GenreSelect
+                key={input.key}
+                required={input.required}
+                onChange={genre =>
                   dispatch({
-                    type: "CHAGNE",
-                    payload: { key: input.key, value: e.target.value },
+                    type: "CHANGE_LIST",
+                    payload: { key: "movie_genre", value: genre },
                   })
                 }
               />
-            </div>
+              <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{error}</p>
+              </div>
+            );
+          else if (input.key === "movie_cast_list")
+            return (
+              <div>
+              <CastListInput
+                key={input.key}
+                required={input.required}
+                castList={form[input.key]}
+                onChange={cast =>
+                  dispatch({
+                    type: "CHANGE_LIST",
+                    payload: { key: input.key, value: cast },
+                  })
+                }
+              />
+              <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{error}</p>
+              </div>
+            );
+          else if (input.type === "textarea")
+            return (
+              <div className="flex flex-col gap-[5px] mb-[15px]" key={input.key}>
+                <label className="font-semibold">
+                  {input.required && (
+                    <span className="mr-[5px] text-red-600">*</span>
+                  )}
+                  {input.label}
+                </label>
+                <textarea
+                  className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400"
+                  value={
+                    form[
+                      input.key as Exclude<
+                        keyof MovieCreateState,
+                        typeof File | null
+                      >
+                    ] as string
+                  }
+                  onChange={e =>
+                    dispatch({
+                      type: "CHAGNE",
+                      payload: { key: input.key, value: e.target.value },
+                    })
+                  }
+                />
+                <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{error}</p>
+              </div>
+            );
+          return (
+            <div>
+            <CustomInput
+              key={input.key}
+              label={input.label}
+              required={input.required}
+              type={input.type}
+              onChange={e =>
+                dispatch({
+                  type: "CHAGNE",
+                  payload: { key: input.key, value: e.target.value },
+                })
+              }
+              value={
+                form[
+                  input.key as Exclude<keyof MovieCreateState, typeof File | null>
+                ] as string
+              }
+            />
+            <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{error}</p>
+              </div>
           );
-        return (
-          <CustomInput
-            key={input.key}
-            label={input.label}
-            required={input.required}
-            type={input.type}
-            onChange={e =>
-              dispatch({
-                type: "CHAGNE",
-                payload: { key: input.key, value: e.target.value },
-              })
-            }
-            value={
-              form[
-                input.key as Exclude<keyof MovieCreateState, typeof File | null>
-              ] as string
-            }
-          />
-        );
-      })}
+        })}
+      </div>
       <CustomButton
         value="등록"
         onClick={handleSubmitMovie}
