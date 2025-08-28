@@ -25,9 +25,20 @@ export const postDirector = async (director: DirectorState) => {
   }
 };
 
+//감독 전체 조회
 export const getDirectors = async () => {
   try {
-    const res = await publicAxios.get("/movie/list");
+    const res = await publicAxios.get("/director");
+    return { pass: true, data: res.data };
+  } catch (error) {
+    return { pass: false, data: error };
+  }
+};
+
+//감독 검색
+export const searchDirectors = async (keyword: string) => {
+  try {
+    const res = await publicAxios.get(`/director/search?keyword=${keyword}`);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };

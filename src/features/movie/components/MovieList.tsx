@@ -20,14 +20,14 @@ const MovieList = () => {
 
       console.log(movies);
       return {
-        movies,
-        nextCursor: undefined,
+        movies: movies.content,
+        nextCursor: pageParam < movies.totalPages ? pageParam + 1 : undefined,
       };
     }
 
     return {
       movies: [],
-      nextCusor: undefined,
+      nextCursor: undefined,
     };
   };
 
@@ -40,6 +40,7 @@ const MovieList = () => {
     });
 
   useEffect(() => {
+    console.log(isFetchingNextPage);
     if (inView && !isFetchingNextPage && hasNextPage) {
       //새 영화 데이터 요청
       fetchNextPage();
@@ -52,7 +53,7 @@ const MovieList = () => {
       <ul className="grid grid-cols-5 gap-[20px] xl:max-2xl:grid-cols-4 md:max-xl:grid-cols-3 sm:max-md:grid-cols-2 max-sm:grid-cols-1 justify-center">
         {data?.pages.map((group, i) => (
           <React.Fragment key={i}>
-            {group.movies?.content.map(
+            {group.movies?.map(
               (movie: {
                 movie_id: number;
                 movie_image: string;

@@ -44,6 +44,7 @@ export const tokenAdmin = async () => {
     const res = await publicAxios.get("/login/token", {
       withCredentials: true,
     });
+    console.log(res);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -53,7 +54,9 @@ export const tokenAdmin = async () => {
 //관리자 로그아웃
 export const logoutAdmin = async () => {
   try {
-    const res = await adminAxios.get("/logout");
+    const res = await adminAxios.get("/logout", {
+      withCredentials: true,
+    });
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };

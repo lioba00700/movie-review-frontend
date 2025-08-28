@@ -13,13 +13,15 @@ import GenreSelect from "./GenreSelect";
 import CastListInput from "./CastListInput";
 import z from "zod";
 import { getMovieDetail, getMovieImage } from "../services/movieAPI";
+import SearchInput from "@/common/components/SearchInput";
+import { searchDirectors } from "../services/directorAPI";
 
 const movieInputs: InputItem[] = [
   { label: "제목", key: "movie_name", type: "text", required: true },
   { label: "장르", key: "movie_genre", type: "text", required: true },
   { label: "개봉일", key: "movie_date", type: "date", required: true },
   { label: "상영시간", key: "movie_time", type: "time", required: true },
-  { label: "감독", key: "movie_director", type: "text", required: true },
+  { label: "감독", key: "movie_director", type: "search", required: true },
   { label: "출연진", key: "movie_cast_list", type: "text", required: true },
   {
     label: "줄거리",
@@ -34,10 +36,11 @@ const movieInitialForm: MovieCreateState = {
   movie_name: "",
   movie_genre: [],
   movie_date: formatDate(new Date()),
-  movie_time: "02:28:00",
+  movie_time: "00:00:00",
   movie_director: "",
   movie_cast_list: [],
   movie_description: "",
+  director_id: null,
 };
 
 const movieReducer = (state: MovieCreateState, action: FormAction) => {
@@ -219,6 +222,40 @@ const MovieForm = ({
                 </p>
               </div>
             );
+          else if (input.type === "search") {
+            return (
+              <div>
+                <SearchInput
+                  key={input.key}
+                  label={input.label}
+                  required={input.required}
+                  type={input.type}
+                  onChange={(keyword, id) => {
+                    dispatch({
+                      type: "CHAGNE",
+                      payload: { key: input.key, value: keyword as string },
+                    });
+                    dispatch({
+                      type: "CHAGNE",
+                      payload: { key: "director_id", value: id },
+                    });
+                  }}
+                  value={
+                    form[
+                      input.key as Exclude<
+                        keyof MovieCreateState,
+                        typeof File | null
+                      >
+                    ] as string
+                  }
+                  onSubmit={(keyword: string) => searchDirectors(keyword)}
+                />
+                <p className="flex mt-[5px] h-[20px] text-xs text-red-600">
+                  {subError && error}
+                </p>
+              </div>
+            );
+          }
           return (
             <div key={input.key}>
               <CustomInput

@@ -38,6 +38,7 @@ export type MovieCreateState = {
   movie_genre: string[];
   movie_description: string;
   movie_image: File | null;
+  director_id: number | null
 };
 
 export type DirectorState = {
