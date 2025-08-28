@@ -46,7 +46,7 @@ const AdminLoginPage = () => {
       const res = await loginAdmin(form);
       if (res.pass) {
         dispatch({ type: "RESET" });
-        login(res.data);
+        login();
         navigate("/");
       }
     } catch (error) {

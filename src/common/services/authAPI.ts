@@ -1,4 +1,5 @@
 //2025.08.27 관리자 관련 API 요청 - 박민서
+import { adminAxios } from "../adminAxios";
 import { publicAxios } from "../publicAxios";
 
 //관리자 회원가입
@@ -22,17 +23,14 @@ export const signupAdmin = async ({
 };
 
 //관리자 로그인
-export const loginAdmin = async ({
-  username,
-  password,
-}: {
+export const loginAdmin = async (form: {
   username: string;
   password: string;
 }) => {
   try {
-    const res = await publicAxios.post("/login", {
-      username,
-      password,
+    console.log(form);
+    const res = await publicAxios.post("/login", form, {
+      withCredentials: true,
     });
     return { pass: true, data: res.data };
   } catch (error) {
@@ -43,7 +41,9 @@ export const loginAdmin = async ({
 //관리자 토큰 갱신
 export const tokenAdmin = async () => {
   try {
-    const res = await publicAxios.get("/login/token");
+    const res = await publicAxios.get("/login/token", {
+      withCredentials: true,
+    });
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -51,15 +51,9 @@ export const tokenAdmin = async () => {
 };
 
 //관리자 로그아웃
-export const logoutAdmin = async ({
-  refreshToken,
-}: {
-  refreshToken: string;
-}) => {
+export const logoutAdmin = async () => {
   try {
-    const res = await publicAxios.post("/logout", {
-      refreshToken,
-    });
+    const res = await adminAxios.get("/logout");
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };

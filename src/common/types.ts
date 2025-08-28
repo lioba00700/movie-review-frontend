@@ -16,7 +16,7 @@ export type ThemeState = {
 
 export type FormAction =
   | { type: "CHAGNE"; payload: { key: string; value: string | File | null } }
-  | { type: "CHANGE_LIST"; payload: { key: string; value: string} }
+  | { type: "CHANGE_LIST"; payload: { key: string; value: string } }
   | { type: "RESET" };
 
 export type ModalState = {
@@ -45,7 +45,7 @@ export type ModalState = {
 };
 
 export type AdminState = {
-  token: string,
-  login: (token:string) => void,
-  logout: () => void
-}
+  isLogin: boolean;
+  login: () => void;
+  logout: () => void;
+};

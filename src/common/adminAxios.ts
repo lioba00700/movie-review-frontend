@@ -14,7 +14,8 @@ export const adminAxios = axios.create({
 
 adminAxios.interceptors.request.use(
   config => {
-    const token = useAdminStore.getState().token;
+    const token = document.cookie.split(encodeURI("access-token") + "=");
+    console.log(token)
 
     if (!token) {
       window.location.href = "/admin/login";
@@ -31,7 +32,7 @@ adminAxios.interceptors.request.use(
     if (response?.status == 401) {
       const res = await tokenAdmin();
       if (res.pass && config) {
-        login(res.data.refreshToken);
+        login();
         return adminAxios(config);
       } else {
         return Promise.reject(error);
