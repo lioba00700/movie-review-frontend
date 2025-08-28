@@ -12,6 +12,7 @@ import {
   MovieListPage,
 } from "@/pages/movie";
 import { AdminLoginPage, AdminSignupPage, AdminMoviePage } from "@/pages/admin";
+import AdminGuard from "./common/components/AdminGuard";
 
 function App() {
   useThemeClass();
@@ -20,15 +21,19 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<MovieListPage />} />
-        <Route path="/add" element={<MovieFormPage />} />
-        <Route path="/add/director" element={<DirectorFormPage />} />
-        <Route path="/edit/:movieId" element={<MovieFormPage />} />
         <Route path="/detail/:movieId" element={<MovieDetailPage />} />
 
         {/*관리자*/}
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin/signup" element={<AdminSignupPage />} />
-        <Route path="/admin/movies" element={<AdminMoviePage />} />
+
+        <Route element={<AdminGuard />}>
+          <Route path="/add/director" element={<DirectorFormPage />} />
+          <Route path="/add" element={<MovieFormPage />} />
+          <Route path="/edit/:movieId" element={<MovieFormPage />} />
+          <Route path="/admin/movies" element={<AdminMoviePage />} />
+        </Route>
+        
 
         {/*404*/}
         <Route path="*" element={<NotFoundPage />} />
