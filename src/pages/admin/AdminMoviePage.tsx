@@ -28,15 +28,18 @@ const AdminMoviePage = () => {
     const res = await getMovieList(pageParam);
     if (res.pass) {
       return res.data;
+    } else {
+      console.log(res.data);
     }
   };
 
   const handlePageNumber = (pageParam: number) => {
+    console.log(pageParam);
     setSelectedPage(pageParam);
-  }
+  };
 
   const { data, refetch } = useQuery({
-    queryKey: ["movie_admin"],
+    queryKey: ["movie_admin", selectedPage],
     queryFn: () => fetchMovies(selectedPage),
   });
 
@@ -132,7 +135,11 @@ const AdminMoviePage = () => {
           <tr>
             <td className="p-[15px] border-1 border-gray-300" colSpan={8}>
               <div className="flex justify-center">
-                <PaginationButton currentPage={data.number} totalPage={data.totalPages} handlePageNumber={handlePageNumber} />
+                <PaginationButton
+                  currentPage={data?.number}
+                  totalPage={data?.totalPages}
+                  handlePageNumber={handlePageNumber}
+                />
               </div>
             </td>
           </tr>
