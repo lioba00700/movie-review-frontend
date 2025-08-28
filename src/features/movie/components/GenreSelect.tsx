@@ -13,9 +13,11 @@ const genres = [
 ];
 
 const GenreSelect = ({
+  genreList,
   required,
   onChange,
 }: {
+  genreList: string[];
   required?: boolean;
   onChange: (genre: string) => void;
 }) => {
@@ -32,6 +34,7 @@ const GenreSelect = ({
               type="checkbox"
               value={genre}
               onChange={() => onChange(genre)}
+              checked={genreList.includes(genre)}
             />
             <label>{genre}</label>
           </div>

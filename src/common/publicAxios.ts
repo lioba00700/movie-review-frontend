@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const publicAxios = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API + "/api",
-  timeout: 500,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },

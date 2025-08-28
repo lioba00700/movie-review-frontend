@@ -91,7 +91,11 @@ const AdminMoviePage = () => {
               {tableHeader.map(header => {
                 if (header.key === "delete") return;
                 return (
-                  <td className="text-left p-[15px] border-1 border-gray-300">
+                  <td
+                    key={header.key}
+                    className="text-left p-[15px] border-1 border-gray-300"
+                    onClick={()=>navigate(`/edit/${movie.movie_id}`)}
+                  >
                     {movie[header.key as keyof Movie] as string}
                   </td>
                 );
@@ -110,9 +114,11 @@ const AdminMoviePage = () => {
                   style="bg-red-600 text-white text-sm w-[30px] h-[30px] hover:bg-red-700"
                 />
               </td>
-              <div className="absolute hidden group-hover:flex p-[15px]">
-                <MdCreate size={20} />
-              </div>
+              <td className="relative flex content-center">
+                <div className="absolute hidden group-hover:flex p-[18px] pr-0">
+                  <MdCreate size={20} />
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

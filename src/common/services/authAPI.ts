@@ -43,7 +43,7 @@ export const loginAdmin = async ({
 //관리자 토큰 갱신
 export const tokenAdmin = async () => {
   try {
-    const res = await publicAxios.post("/login/token");
+    const res = await publicAxios.get("/login/token");
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };

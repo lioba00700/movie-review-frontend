@@ -19,6 +19,7 @@ const MovieFormPage = () => {
             ? (form: MovieCreateState) => putMovie(Number(movieId), form)
             : (form: MovieCreateState) => postMovie(form)
         }
+        movieId={movieId}
       />
     </div>
   );

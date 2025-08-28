@@ -1,18 +1,21 @@
 //2025.08.21 테마 상태 관리 로직 - 박민서
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { ThemeState } from '@/common/types';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type { ThemeState } from "@/common/types";
 
 const useThemeStore = create<ThemeState>()(
-  persist((set)=>({
-    theme: 'light',
-    changeTheme: () => set((state)=>({
-      theme: state.theme === 'light' ? 'dark' : 'light'
-    }))
-  }),
-  {
-    name:'theme-storage',
-  }
-))
+  persist(
+    set => ({
+      theme: "light",
+      changeTheme: () =>
+        set(state => ({
+          theme: state.theme === "light" ? "dark" : "light",
+        })),
+    }),
+    {
+      name: "theme-storage",
+    },
+  ),
+);
 
 export default useThemeStore;

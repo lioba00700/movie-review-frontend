@@ -38,7 +38,7 @@ const directorReducer = (state: DirectorState, action: FormAction) => {
 const DirectorFormPage = () => {
   const navigate = useNavigate();
   const [form, dispatch] = useReducer(directorReducer, directorInitialForm);
-  const [subDisabled, setSubDisabled] = useState<boolean>(true);
+  const [subError, setError] = useState<boolean>(false);
 
   const handleSubmitDirector = async () => {
     //입력값 확인
@@ -51,71 +51,73 @@ const DirectorFormPage = () => {
       }
     } catch (error) {
       console.log(error);
+      setError(true);
     }
   };
-
-  useEffect(() => {
-    if (Object.values(form).some(value => value === "")) {
-      setSubDisabled(true);
-      return;
-    }
-    setSubDisabled(false);
-    return;
-  }, [form]);
 
   return (
     <div className="pt-[90px] h-full p-[50px] w-md dark:text-white">
       <h1 className="text-2xl font-bold mb-[30px]">감독 등록</h1>
       <div className="flex flex-col gap-[10px]">
-
-<div>
-      <ImageUploader
-        type="profile"
-        label="프로필 이미지"
-        required={true}
-        value={form.director_images}
-        onChange={e =>
-          dispatch({
-            type: "CHAGNE",
-            payload: {
-              key: "director_images",
-              value: e.target.files?.[0] || null,
-            },
-          })
-        }
-      />
-      <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{Director.shape.director_images.safeParse(form.director_images).error?.issues[0].message}</p>
-      </div>
-      {movieInputs.map(input => {
-        const schema = Director.shape[input.key as keyof typeof Director.shape];
-        const error = schema.safeParse(form[input.key as keyof DirectorState]).error?.issues[0].message || null;
-        return (
-          <div>
-            <CustomInput
-              key={input.key}
-              label={input.label}
-              required={input.required}
-              type={input.type}
-              onChange={e =>
-                dispatch({
-                  type: "CHAGNE",
-                  payload: { key: input.key, value: e.target.value },
-                })
-              }
-              value={
-                form[
-                  input.key as Exclude<keyof DirectorState, typeof File | null>
-                ] as string
-              }
-            />
-            <p className="flex mt-[5px] h-[20px] text-xs text-red-600">{error}</p>
-          </div>
-      )})}
+        <div>
+          <ImageUploader
+            type="profile"
+            label="프로필 이미지"
+            required={true}
+            value={form.director_images}
+            onChange={e =>
+              dispatch({
+                type: "CHAGNE",
+                payload: {
+                  key: "director_images",
+                  value: e.target.files?.[0] || null,
+                },
+              })
+            }
+          />
+          <p className="flex mt-[5px] h-[20px] text-xs text-red-600">
+            {subError &&
+              Director.shape.director_images.safeParse(form.director_images)
+                .error?.issues[0].message}
+          </p>
+        </div>
+        {movieInputs.map(input => {
+          const schema =
+            Director.shape[input.key as keyof typeof Director.shape];
+          const error =
+            schema.safeParse(form[input.key as keyof DirectorState]).error
+              ?.issues[0].message || null;
+          return (
+            <div key={input.key}>
+              <CustomInput
+                label={input.label}
+                required={input.required}
+                type={input.type}
+                onChange={e =>
+                  dispatch({
+                    type: "CHAGNE",
+                    payload: { key: input.key, value: e.target.value },
+                  })
+                }
+                value={
+                  form[
+                    input.key as Exclude<
+                      keyof DirectorState,
+                      typeof File | null
+                    >
+                  ] as string
+                }
+              />
+              <p className="flex mt-[5px] h-[20px] text-xs text-red-600">
+                {subError && error}
+              </p>
+            </div>
+          );
+        })}
       </div>
       <CustomButton
         value="등록"
         onClick={handleSubmitDirector}
-        disabled={subDisabled}
         style="mt-[50px] bg-blue-600 text-white text-md font-bold p-[8px] w-[50%] dark:disabled:bg-gray-500/50 "
       />
     </div>

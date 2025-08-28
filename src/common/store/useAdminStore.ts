@@ -4,7 +4,7 @@ import type { AdminState } from "../types";
 
 const useAdminStore = create<AdminState>(set => ({
   token:
-    "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpc3MiOiJjaG9laHVud29vQGdtYWlsLmNvbSIsImlhdCI6MTc1NjI4MjAzNiwiZXhwIjoxNzU2Mjg1ODc2LCJzdWIiOiJhZG1pbiIsImlkIjoxLCJ0eXBlIjoiQSIsImF1dGhvcml0aWVzIjpbIkRFTEVURV9BVVRIT1JJVFkiLCJSRUFEX0FVVEhPUklUWSIsIkNSRUFURV9BVVRIT1JJVFkiLCJVUERBVEVfQVVUSE9SSVRZIiwiUk9MRV9BRE1JTiJdfQ.C51tBhIck1FEjumZ7NJkYUxljOUxF6aCwEFGTDm_Bhg",
+    "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpc3MiOiJjaG9laHVud29vQGdtYWlsLmNvbSIsImlhdCI6MTc1NjM0MzYzMywiZXhwIjoxNzU2NTU5NjMzLCJzdWIiOiJhZG1pbiIsImlkIjoxLCJ0eXBlIjoiQSIsImF1dGhvcml0aWVzIjpbIlJFQURfQVVUSE9SSVRZIiwiREVMRVRFX0FVVEhPUklUWSIsIkNSRUFURV9BVVRIT1JJVFkiLCJVUERBVEVfQVVUSE9SSVRZIiwiUk9MRV9BRE1JTiJdfQ.2UunQ2LVAukeryszoX2yAL6aazinqA3OVxRYs4x4Ff0",
   login: token =>
     set({
       token,
