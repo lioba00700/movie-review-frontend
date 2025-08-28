@@ -6,9 +6,9 @@ import useAdminStore from "@/common/store/useAdminStore";
 import axios from "axios";
 
 //영화 게시판 목록 조회
-export const getMovieList = async () => {
+export const getMovieList = async (pageParam: number) => {
   try {
-    const res = await publicAxios.get("/movie/list");
+    const res = await publicAxios.get(`/movie/list?page=${pageParam}`);
     return { pass: true, data: res.data };
   } catch (error) {
     return { pass: false, data: error };
@@ -29,7 +29,6 @@ export const getMovieDetail = async (id: number) => {
 export const putMovie = async (id: number, movie: MovieCreateState) => {
   console.log(movie);
   const formData = new FormData();
-  const token = useAdminStore.getState().token;
   Object.entries(movie).map(([key, value]) => {
     if (key === "movie_image") {
       formData.append("images", value as File);
@@ -44,10 +43,9 @@ export const putMovie = async (id: number, movie: MovieCreateState) => {
   });
   console.log(formData);
   try {
-    const res = await publicAxios.put(`/movie/${id}`, formData, {
+    const res = await adminAxios.put(`/movie/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
       },
     });
     return { pass: true, data: res.data };
@@ -69,7 +67,6 @@ export const patchMovie = async (id: number) => {
 //영화 게시판 작성
 export const postMovie = async (movie: MovieCreateState) => {
   const formData = new FormData();
-  const token = useAdminStore.getState().token;
   Object.entries(movie).map(([key, value]) => {
     if (key === "movie_image") {
       formData.append("images", value as File);
@@ -83,10 +80,9 @@ export const postMovie = async (movie: MovieCreateState) => {
     formData.append(key, value as string);
   });
   try {
-    const res = await publicAxios.post(`/movie`, formData, {
+    const res = await adminAxios.post(`/movie`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
       },
     });
     console.log(res.data);

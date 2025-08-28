@@ -14,7 +14,7 @@ const MovieList = () => {
   const { ref, inView } = useInView();
 
   const fetchPage = async (pageParam: number) => {
-    const res = await getMovieList();
+    const res = await getMovieList(pageParam);
     if (res.pass) {
       const movies = res.data;
 
@@ -31,19 +31,13 @@ const MovieList = () => {
     };
   };
 
-  const {
-    data,
-    error,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["movies"],
-    queryFn: ({ pageParam }) => fetchPage(pageParam),
-    initialPageParam: 1,
-    getNextPageParam: lastPage => lastPage.nextCursor,
-  });
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useInfiniteQuery({
+      queryKey: ["movies"],
+      queryFn: ({ pageParam }) => fetchPage(pageParam),
+      initialPageParam: 0,
+      getNextPageParam: lastPage => lastPage.nextCursor,
+    });
 
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {
@@ -58,7 +52,7 @@ const MovieList = () => {
       <ul className="grid grid-cols-5 gap-[20px] xl:max-2xl:grid-cols-4 md:max-xl:grid-cols-3 sm:max-md:grid-cols-2 max-sm:grid-cols-1 justify-center">
         {data?.pages.map((group, i) => (
           <React.Fragment key={i}>
-            {group.movies?.map(
+            {group.movies?.content.map(
               (movie: {
                 movie_id: number;
                 movie_image: string;

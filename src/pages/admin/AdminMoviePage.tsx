@@ -6,6 +6,7 @@ import useModal from "@/common/hooks/useModal";
 import { getMovieList, patchMovie } from "@/features/movie/services/movieAPI";
 import type { Movie } from "@/features/movie/types";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { MdCreate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
@@ -21,17 +22,22 @@ const tableHeader = [
 const AdminMoviePage = () => {
   const navigate = useNavigate();
   const { handleModal } = useModal();
+  const [selectedPage, setSelectedPage] = useState<number>(0);
 
-  const fetchMovies = async () => {
-    const res = await getMovieList();
+  const fetchMovies = async (pageParam: number) => {
+    const res = await getMovieList(pageParam);
     if (res.pass) {
       return res.data;
     }
   };
 
+  const handlePageNumber = (pageParam: number) => {
+    setSelectedPage(pageParam);
+  }
+
   const { data, refetch } = useQuery({
     queryKey: ["movie_admin"],
-    queryFn: () => fetchMovies(),
+    queryFn: () => fetchMovies(selectedPage),
   });
 
   const handleSubmitDelete = async (id: number) => {
@@ -83,7 +89,7 @@ const AdminMoviePage = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((movie: Movie) => (
+          {data?.content.map((movie: Movie) => (
             <tr
               key={movie.movie_id}
               className="cursor-pointer hover:bg-gray-200 dark:hover:bg-white/10 group"
@@ -94,7 +100,7 @@ const AdminMoviePage = () => {
                   <td
                     key={header.key}
                     className="text-left p-[15px] border-1 border-gray-300"
-                    onClick={()=>navigate(`/edit/${movie.movie_id}`)}
+                    onClick={() => navigate(`/edit/${movie.movie_id}`)}
                   >
                     {movie[header.key as keyof Movie] as string}
                   </td>
@@ -126,7 +132,7 @@ const AdminMoviePage = () => {
           <tr>
             <td className="p-[15px] border-1 border-gray-300" colSpan={8}>
               <div className="flex justify-center">
-                <PaginationButton currentPage={1} changePage={() => {}} />
+                <PaginationButton currentPage={data.number} totalPage={data.totalPages} handlePageNumber={handlePageNumber} />
               </div>
             </td>
           </tr>
