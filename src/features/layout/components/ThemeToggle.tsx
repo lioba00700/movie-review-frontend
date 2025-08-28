@@ -10,9 +10,9 @@ type ThemeToggle = {
 const ThemeToggle = ({theme, onClick}:ThemeToggle) => {
   return (
     <button 
-      className={`${theme==='light' ? "bg-black" : "bg-white border-gray-400 border-1"} flex w-[60px] transition-all rounded-full cursor-pointer p-[3px]`}
+      className={`${theme==='light' ? "bg-black" : "bg-white border-gray-400 border-1"} flex w-[60px] max-md:w-[32px] transition-all rounded-full cursor-pointer p-[3px]`}
       onClick={onClick} >
-      <span className={`${theme==='light' ? "bg-white -translate-x-0" : "bg-black translate-x-full"} flex w-[25px] h-[25px] rounded-full transition-all items-center justify-center`}>
+      <span className={`${theme==='light' ? "bg-white -translate-x-0" : "bg-black translate-x-[100%] max-md:translate-none"} flex w-[25px] h-[25px] rounded-full transition-all items-center justify-center`}>
         {
           theme == 'light' ? (
             <MdDarkMode className="text-black"/>

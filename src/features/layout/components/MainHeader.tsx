@@ -27,8 +27,8 @@ const MainHeader = () => {
   };
 
   return (
-    <header className="flex justify-between bg-white dark:bg-black fixed w-full h-[60px] z-4 border-b-1 border-gray-200 dark:border-gray-500 items-center p-[20px] top-0">
-      <h1 className="text-2xl font-bold dark:text-white">영화 리뷰</h1>
+    <header className="flex text-nowrap max-md:text-sm justify-between bg-white dark:bg-black fixed w-full h-[60px] z-4 border-b-1 border-gray-200 dark:border-gray-500 items-center p-[20px] top-0">
+      <h1 className="text-2xl font-bold dark:text-white max-md:text-lg">영화 리뷰</h1>
       <div className="flex gap-[30px] text-md font-semibold text-gray-600 dark:text-gray-200">
         <p
           className="hover:text-gray-400 cursor-pointer"
