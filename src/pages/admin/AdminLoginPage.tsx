@@ -66,7 +66,7 @@ const AdminLoginPage = () => {
       <h1 className="text-3xl font-bold mb-[60px]">관리자 로그인</h1>
       <div>
         <CustomInput
-          label="Username"
+          label="ID"
           type="text"
           onChange={e =>
             dispatch({
