@@ -48,6 +48,7 @@ adminAxios.interceptors.response.use(
       console.log(res);
       //재발급 성공
       if (res.pass) {
+        login(res.data);
         const token = useAdminStore.getState().token;
         console.log(token);
         config.headers["Authorization"] = `Bearer ${token}`;
