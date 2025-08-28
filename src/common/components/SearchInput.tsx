@@ -58,7 +58,7 @@ const SearchInput = ({
       </div>
       {openList && (
         <ul className="absolute w-full rounded-lg p-[5px] top-[90px] bg-white dark:bg-black border-1 border-gray-200 dark:border-white">
-          {searchList.map((search: any) => (
+          {searchList.length>0 ? searchList.map((search: any) => (
             <li
               className="hover:bg-gray-200 dark:hover:bg-white/30 p-[10px] rounded-lg"
               key={search.id}
@@ -69,7 +69,7 @@ const SearchInput = ({
             >
               {search.name}
             </li>
-          ))}
+          )) : <li className="p-[10px]">검색 결과가 없습니다.</li>}
         </ul>
       )}
     </div>

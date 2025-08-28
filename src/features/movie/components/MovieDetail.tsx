@@ -11,10 +11,10 @@ const MovieDetail = ({movie_image, movie_name, movie_genre, movie_date, movie_di
       <div className="bg-gray-300 h-screen dark:bg-gray-500/50 overflow-hidden">
         <img src={movie_image} alt="poster" width={'100%'}/>
       </div>
-      <div className="p-[50px] absolute bottom-[100px] right-[100px] bg-white/70 dark:bg-black/70 rounded-xl text-black dark:text-white min-w-lg">
+      <div className="p-[50px] absolute bottom-[3%] right-[3%] left-[3%] bg-white/70 dark:bg-black/70 rounded-xl text-black dark:text-white lg:-w-lg ">
         <RatingButton rating={movie_rating} />
         <h1 className="text-4xl font-bold mb-[20px]">{movie_name}</h1>
-        <div className="flex gap-[15px] text-md text-gray-400 dark:text-gray-300">
+        <div className="flex gap-[15px] text-md max-sm:flex-col text-gray-400 dark:text-gray-300">
           <p>장르: <span className="font-semibold">{movie_genre}</span></p>
           <p>개봉일: <span className="font-semibold">{movie_date}</span></p>
         </div>

@@ -20,8 +20,9 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
 
   const fetchReview = async () => {
     const res = await getReviewList(movieId);
+    console.log(res.data)
     if (res.pass) {
-      const reviews = res.data;
+      const reviews = res.data.content;
 
       return {
         reviews,
