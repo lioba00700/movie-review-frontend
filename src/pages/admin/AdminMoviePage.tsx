@@ -78,7 +78,7 @@ const AdminMoviePage = () => {
                   width = "w-[50px]";
                   break;
                 default:
-                  width = "flex-1";
+                  width = "w-1/5";
               }
               return (
                 <th

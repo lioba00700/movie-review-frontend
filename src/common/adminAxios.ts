@@ -28,6 +28,7 @@ adminAxios.interceptors.request.use(
   },
   async (error: AxiosError) => {
     const login = useAdminStore.getState().login;
+    const logout = useAdminStore.getState().logout;
     const { response, config } = error;
     if (response?.status == 401) {
       const res = await tokenAdmin();
@@ -35,6 +36,7 @@ adminAxios.interceptors.request.use(
         login();
         return adminAxios(config);
       } else {
+        logout();
         return Promise.reject(error);
       }
     }

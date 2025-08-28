@@ -14,7 +14,7 @@ const PaginationButton = ({
   const [pageGroup, setPageGroup] = useState<number>(0);
 
   useEffect(() => {
-    if (pageGroup!==0 && currentPage + 1 > pageGroup * 8) {
+    if (pageGroup !== 0 && currentPage + 1 > pageGroup * 8) {
       setPageGroup(pageGroup + 1);
       console.log(pageGroup);
     }
@@ -31,7 +31,7 @@ const PaginationButton = ({
         style="flex hover:bg-gray-200 dark:hover:bg-white/10 min-w-[40px] h-[40px] items-center justify-center"
       />
       <div className="flex font-medium text-xl gap-[3px]">
-        {Array.from({ length: Math.min(totalPage - currentPage, 8) }).map(
+        {Array.from({ length: Math.min(totalPage - pageGroup * 8, 8) }).map(
           (_, i) => {
             console.log(8 * pageGroup + i + 1, pageGroup);
             console.log("현재페이지", currentPage);
@@ -50,7 +50,7 @@ const PaginationButton = ({
         value=""
         icon="rightArrow"
         onClick={() => handlePageNumber(currentPage + 1)}
-        disabled={currentPage > totalPage - 1}
+        disabled={currentPage >= totalPage - 1}
         style="flex hover:bg-gray-200 dark:hover:bg-white/10 min-w-[40px] h-[40px] items-center justify-center"
       />
     </div>
