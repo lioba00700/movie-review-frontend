@@ -51,6 +51,9 @@ const AdminLoginPage = () => {
         login(res.data.accessToken);
         navigate("/");
       }
+      else{
+        toast.error('로그인에 실패했습니다.');
+      }
     } catch (error) {
       toast.error('로그인에 실패했습니다.');
       setError(true);

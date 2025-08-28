@@ -51,6 +51,8 @@ const AdminSignupPage = () => {
         console.log("회원가입 성공");
         dispatch({ type: "RESET" });
         navigate("/admin/login");
+      }else{
+        toast.error('로그인에 실패했습니다.');
       }
     } catch (error) {
       toast.error('회원가입에 실패했습니다.')
