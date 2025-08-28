@@ -6,13 +6,16 @@ import { persist } from "zustand/middleware";
 const useAdminStore = create<AdminState>()(
   persist(
     set => ({
+      token: null,
       isLogin: false,
-      login: () =>
+      login: (token: string) =>
         set({
+          token,
           isLogin: true,
         }),
       logout: () =>
         set({
+          token: null,
           isLogin: false,
         }),
     }),

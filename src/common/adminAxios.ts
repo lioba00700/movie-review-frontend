@@ -9,19 +9,21 @@ export const adminAxios = axios.create({
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
+    credentials: "include",
   },
   withCredentials: true,
 });
 
 adminAxios.interceptors.request.use(
   config => {
-    const token = document.cookie.split(encodeURI("access-token") + "=");
+    const token = useAdminStore.getState().token;
 
-    if (!token[1]) {
+    console.log(token);
+    if (!token) {
       return config;
     }
 
-    config.headers["Authorization"] = `Bearer ${token[1]}`;
+    config.headers["Authorization"] = `Bearer ${token}`;
 
     return config;
   },
@@ -40,16 +42,16 @@ adminAxios.interceptors.response.use(
     const logout = useAdminStore.getState().logout;
 
     //401 에러
-    if (response?.status == 401 && config) {
+    if (response?.status == 401) {
       //토큰 재발급 요청
       const res = await tokenAdmin();
       console.log(res);
       //재발급 성공
       if (res.pass) {
-        const token = document.cookie.split(encodeURI("access-token") + "=");
-        console.log(token)
-        config.headers["Authorization"] = `Bearer ${token[1]}`;
-        login();
+        const token = useAdminStore.getState().token;
+        console.log(token);
+        config.headers["Authorization"] = `Bearer ${token}`;
+        login(token as string);
         return adminAxios(config);
         //재발급 실패
       } else {
@@ -58,7 +60,7 @@ adminAxios.interceptors.response.use(
         const res = await logoutAdmin();
         if (res.pass) {
           //로그인 화면 이동]
-          return
+          window.location.href = "/admin/login";
         }
         return Promise.reject(error);
       }

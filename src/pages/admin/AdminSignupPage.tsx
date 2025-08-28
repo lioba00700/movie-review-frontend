@@ -46,6 +46,7 @@ const AdminSignupPage = () => {
         password: form.password,
       });
       if (res.pass) {
+        console.log("회원가입 성공");
         dispatch({ type: "RESET" });
         navigate("/admin/login");
       }
@@ -78,7 +79,7 @@ const AdminSignupPage = () => {
       <div>
         <CustomInput
           label="비밀번호"
-          type="text"
+          type="password"
           onChange={e =>
             dispatch({
               type: "CHAGNE",
@@ -95,7 +96,7 @@ const AdminSignupPage = () => {
       <div>
         <CustomInput
           label="비밀번호 확인"
-          type="rePassword"
+          type="password"
           onChange={e =>
             dispatch({
               type: "CHAGNE",

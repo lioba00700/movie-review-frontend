@@ -48,7 +48,8 @@ export type ModalState = {
 };
 
 export type AdminState = {
+  token: string | null
   isLogin: boolean;
-  login: () => void;
+  login: (token:string) => void;
   logout: () => void;
 };
