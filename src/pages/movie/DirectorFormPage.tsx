@@ -7,7 +7,7 @@ import type { FormAction, InputItem } from "@/common/types";
 import { formatDate } from "@/common/utils";
 import { postDirector } from "@/features/movie/services/directorAPI";
 import type { DirectorState } from "@/features/movie/types";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const movieInputs: InputItem[] = [

@@ -36,6 +36,7 @@ const MovieDetailPage = () => {
             movie_description={movie.movie_description}
             movie_image={`${import.meta.env.VITE_SERVER_API}${movie.movie_image}`}
             movie_rating={movie.movie_rating}
+            movie_cast_list={movie.movie_cast_list}
           />
           <div className="p-[50px] dark:bg-black">
             <ReviewList movieId={movie.movie_id} />

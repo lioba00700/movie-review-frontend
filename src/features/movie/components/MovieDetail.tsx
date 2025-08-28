@@ -4,7 +4,7 @@ import BackToTopButton from "@/common/components/BackToTopButton";
 import RatingButton from "@/features/review/components/RatingButton";
 import type { Movie } from "@movie/types";
 
-const MovieDetail = ({movie_image, movie_name, movie_genre, movie_date, movie_director, movie_description, movie_rating}:Movie) => {
+const MovieDetail = ({movie_image, movie_name, movie_genre, movie_date, movie_director, movie_description, movie_rating, movie_cast_list}:Movie) => {
 
   return (
     <div className="h-screen">
@@ -16,10 +16,13 @@ const MovieDetail = ({movie_image, movie_name, movie_genre, movie_date, movie_di
         <h1 className="text-4xl font-bold mb-[20px]">{movie_name}</h1>
         <div className="flex gap-[15px] text-md text-gray-400 dark:text-gray-300">
           <p>장르: <span className="font-semibold">{movie_genre}</span></p>
-          <p>감독: <span className="font-semibold" >{movie_director}</span></p>
           <p>개봉일: <span className="font-semibold">{movie_date}</span></p>
         </div>
         <p className="mt-[20px] text-lg">{movie_description}</p>
+      </div>
+      <div className="p-[40px] border-b-1 border-gray-200">
+          <p>감독: <span className="font-semibold" >{movie_director}</span></p>
+          <p>출연진: <span className="font-semibold" >{movie_cast_list}</span></p>
       </div>
       <BackToTopButton />
     </div>

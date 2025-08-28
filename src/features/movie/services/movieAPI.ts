@@ -2,7 +2,6 @@
 import { publicAxios } from "@/common/publicAxios";
 import type { MovieCreateState } from "../types";
 import { adminAxios } from "@/common/adminAxios";
-import useAdminStore from "@/common/store/useAdminStore";
 import axios from "axios";
 
 //영화 게시판 목록 조회

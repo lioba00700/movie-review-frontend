@@ -1,7 +1,7 @@
 //2025.08.26 API 연결 - 박민서
 //2025.08.22 스켈레톤 UI 적용 - 박민서
 //2025.08.21 리뷰 목록 컴포넌트 - 박민서
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ReviewItem from "./ReviewItem";
 import ReviewForm from "./ReviewForm";
 import { useInView } from "react-intersection-observer";
@@ -18,7 +18,7 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
     refetch();
   };
 
-  const fetchReview = async (pageParam: number) => {
+  const fetchReview = async () => {
     const res = await getReviewList(movieId);
     if (res.pass) {
       const reviews = res.data;
@@ -44,7 +44,7 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
     fetchNextPage,
   } = useInfiniteQuery({
     queryKey: ["reviews"],
-    queryFn: ({ pageParam }) => fetchReview(pageParam),
+    queryFn: () => fetchReview(),
     initialPageParam: 1,
     getNextPageParam: lastPage => lastPage.nextCursor,
   });
@@ -56,7 +56,7 @@ const ReviewList = ({ movieId }: { movieId: number }) => {
   }, [inView, isFetchingNextPage, hasNextPage]);
 
   return (
-    <div>
+    <div className="mt-[100px]">
       <h3 className="text-2xl font-bold mb-[20px]">리뷰</h3>
       <div className="w-md mb-[30px]">
         <ReviewForm

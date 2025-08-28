@@ -8,7 +8,7 @@ import CustomButton from "@/common/components/CustomButton";
 import { formatDate, formatTime } from "@/common/utils";
 import ImageUploader from "@/common/components/ImageUploader";
 import { MovieSchema } from "@/common/schema/movie.schema";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GenreSelect from "./GenreSelect";
 import CastListInput from "./CastListInput";
 import z from "zod";

@@ -9,7 +9,6 @@ const MovieItem = ({
   movie_name,
   movie_genre,
   movie_date,
-  movie_rating,
   movie_director,
   movie_image,
 }: Movie) => {
