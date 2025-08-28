@@ -39,7 +39,7 @@ const ReviewItem = ({
   };
 
   return (
-    <li className="border-1 border-gray-300 rounded-xl w-full p-[20px] relative">
+    <li className="border-1 border-gray-300 rounded-xl w-full p-[20px] relative cursor-pointer" onClick={()=>handleModal({type:'reviewDetail', movieId:Number(movieId), reviewId, message: '리뷰 상세'})}>
       <p className="text-xl font-bold">{name}</p>
       <RatingButton rating={rating} disabled={true} />
       <p className="mt-[15px]">{review}</p>

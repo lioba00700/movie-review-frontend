@@ -3,6 +3,8 @@
 import useModal from "@/common/hooks/useModal";
 import CustomButton from "./CustomButton";
 import ReviewForm from "@/features/review/components/ReviewForm";
+import ReviewDetail from "@/features/review/components/ReviewDetail";
+import { MdClose } from "react-icons/md";
 
 const Modal = () => {
   const { type, message, id, reviewId, closeModal, onSubmit } = useModal();
@@ -14,6 +16,7 @@ const Modal = () => {
         onClick={closeModal}
       ></div>
       <div className="flex flex-col bg-white w-md h-fit min-h-[200px] m-auto fixed inset-0 rounded-lg z-6 p-[40px]">
+        <button className="self-end cursor-pointer" onClick={closeModal}><MdClose size={30}/></button>
         <h3 className="text-center text-xl font-bold mb-[60px]">{message}</h3>
         {type === "editReview" ? (
           <ReviewForm
@@ -23,6 +26,8 @@ const Modal = () => {
             onSubmit={onSubmit}
             closeModal={closeModal}
           />
+        ) : type==='reviewDetail' ? (
+          <ReviewDetail reviewId={reviewId as number} movieId={id as number}/>
         ) : (
           <div className="flex gap-[10px]">
             <CustomButton
@@ -33,8 +38,10 @@ const Modal = () => {
             <CustomButton
               value="예"
               onClick={() => {
-                onSubmit();
-                closeModal();
+                if(onSubmit){
+                  onSubmit();
+                  closeModal();  
+                }
               }}
               style="bg-gray-200 text-black text-md font-bold p-[5px] flex-1"
             />

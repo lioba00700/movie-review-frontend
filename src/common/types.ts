@@ -27,7 +27,7 @@ export type ModalState = {
     isOpen: boolean;
     type: "confirm" | "reviewDetail" | "editReview";
     message: string;
-    onSubmit: () => void;
+    onSubmit?: () => void;
     movieId?: number | null;
     reviewId?: number | null;
   };
@@ -40,7 +40,7 @@ export type ModalState = {
   }: {
     type: "confirm" | "reviewDetail" | "editReview";
     message: string;
-    onSubmit: (form?: ReviewCreateState) => void;
+    onSubmit?: (form?: ReviewCreateState) => void;
     movieId?: number | null;
     reviewId?: number | null;
   }) => void;
