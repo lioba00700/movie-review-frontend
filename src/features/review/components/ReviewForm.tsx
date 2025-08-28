@@ -7,6 +7,7 @@ import type { ReviewAction, ReviewCreateState } from "@review/types";
 import RatingButton from "./RatingButton";
 import { ReviewSchema } from "@/common/schema/review.schema";
 import { getReviewDetail, postReview } from "../services/reviewAPI";
+import { toast } from "react-toastify";
 
 const reviewInitialForm: ReviewCreateState = {
   name: "",
@@ -52,15 +53,18 @@ const ReviewForm = ({
       if (type === "create" && movieId && handleChange) {
         const res = await postReview(movieId, form);
         if (res.pass) {
+          toast.success('완료되었습니다.');
           dispatch({ type: "RESET" });
           handleChange();
         }
         //리뷰 수정
       } else if (type === "edit" && onSubmit && closeModal) {
         onSubmit(form);
+        toast.success('완료되었습니다.');
         closeModal();
       }
     } catch (error) {
+      toast.error('요청에 실패했습니다.');
       console.log(error);
     }
   };

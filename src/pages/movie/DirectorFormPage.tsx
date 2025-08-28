@@ -9,6 +9,7 @@ import { postDirector } from "@/features/movie/services/directorAPI";
 import type { DirectorState } from "@/features/movie/types";
 import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const movieInputs: InputItem[] = [
   { label: "이름", key: "name", type: "text", required: true },
@@ -46,10 +47,12 @@ const DirectorFormPage = () => {
     try {
       Director.parse(form);
       const res = await postDirector(form);
+      toast.success('완료되었습니다.');
       if (res.pass) {
         navigate("/");
       }
     } catch (error) {
+      toast.error('요청에 실패했습니다.');
       console.log(error);
       setError(true);
     }

@@ -15,6 +15,7 @@ import z from "zod";
 import { getMovieDetail, getMovieImage } from "../services/movieAPI";
 import SearchInput from "@/common/components/SearchInput";
 import { searchDirectors } from "../services/directorAPI";
+import { toast } from "react-toastify";
 
 const movieInputs: InputItem[] = [
   { label: "제목", key: "movie_name", type: "text", required: true },
@@ -85,9 +86,11 @@ const MovieForm = ({
       const res = await onSubmit(form);
       if (res.pass) {
         navigate("/");
+        toast.success('완료되었습니다.')
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
+        toast.error('입력을 확인해주세요.')
         console.log(error);
         setError(true);
       }

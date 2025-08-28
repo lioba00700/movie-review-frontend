@@ -6,6 +6,7 @@ import { signupAdmin } from "@/common/services/authAPI";
 import type { FormAction } from "@/common/types";
 import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type SignupState = {
   username: string;
@@ -46,11 +47,13 @@ const AdminSignupPage = () => {
         password: form.password,
       });
       if (res.pass) {
+        toast.success('회원가입되었습니다.')
         console.log("회원가입 성공");
         dispatch({ type: "RESET" });
         navigate("/admin/login");
       }
     } catch (error) {
+      toast.error('회원가입에 실패했습니다.')
       setError(true);
       console.log(error);
     }

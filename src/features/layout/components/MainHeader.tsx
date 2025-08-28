@@ -5,6 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 import useTheme from "@/common/hooks/useTheme";
 import useAdmin from "@/common/hooks/useAdmin";
 import { logoutAdmin } from "@/common/services/authAPI";
+import { toast } from "react-toastify";
 
 const MainHeader = () => {
   const { isLogin, logout } = useAdmin();
@@ -19,6 +20,7 @@ const MainHeader = () => {
   const handleLogout = async () => {
     const res = await logoutAdmin();
     if (res.pass) {
+      toast.success('로그아웃 되었습니다.');
       logout();
       navigate("/");
     }

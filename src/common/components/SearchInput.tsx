@@ -24,7 +24,7 @@ const SearchInput = ({
 
   const handleSubmitSearch = async () => {
     const res = await onSubmit(keyword);
-    console.log(res.data);
+    console.log(.data);
     if (res.pass) {
       setSearchList(res.data);
       setOpenList(true);

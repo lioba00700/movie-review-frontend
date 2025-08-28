@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { MdCreate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const tableHeader = [
   { key: "movie_id", name: "ID" },
@@ -46,7 +47,11 @@ const AdminMoviePage = () => {
   const handleSubmitDelete = async (id: number) => {
     const res = await patchMovie(id);
     if (res.pass) {
+      toast.success('삭제되었습니다.');
       refetch();
+    }
+    else{
+      toast.error('삭제에 실패했습니다.');
     }
   };
   console.log(data);

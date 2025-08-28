@@ -8,6 +8,7 @@ import { loginAdmin } from "@/common/services/authAPI";
 import type { FormAction } from "@/common/types";
 import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type LoginState = {
   username: string;
@@ -45,11 +46,13 @@ const AdminLoginPage = () => {
       AdminLogin.parse(form);
       const res = await loginAdmin(form);
       if (res.pass) {
+        toast.success('로그인되었습니다.');
         dispatch({ type: "RESET" });
         login(res.data.accessToken);
         navigate("/");
       }
     } catch (error) {
+      toast.error('로그인에 실패했습니다.');
       setError(true);
       console.log(error);
     }

@@ -3,6 +3,7 @@ import type React from "react"
 import MainHeader from "./MainHeader"
 import useModal from "@/common/hooks/useModal"
 import Modal from "@/common/components/Modal";
+import {ToastContainer} from 'react-toastify'
 
 const Layout = ({children}:{children: React.ReactNode}) => {
   const {isOpen} = useModal();
@@ -15,6 +16,7 @@ const Layout = ({children}:{children: React.ReactNode}) => {
           <Modal />
         )
       }
+      <ToastContainer />
     </div>
   )
 }
