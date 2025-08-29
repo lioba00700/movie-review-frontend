@@ -86,11 +86,11 @@ const MovieForm = ({
       const res = await onSubmit(form);
       if (res.pass) {
         navigate("/");
-        toast.success('완료되었습니다.')
+        toast.success("완료되었습니다.");
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast.error('입력을 확인해주세요.')
+        toast.error("입력을 확인해주세요.");
         console.log(error);
         setError(true);
       }
@@ -204,7 +204,7 @@ const MovieForm = ({
                   {input.label}
                 </label>
                 <textarea
-                  className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400"
+                  className="resize-none transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400"
                   value={
                     form[
                       input.key as Exclude<
@@ -219,6 +219,7 @@ const MovieForm = ({
                       payload: { key: input.key, value: e.target.value },
                     })
                   }
+                  rows={10}
                 />
                 <p className="flex mt-[5px] h-[20px] text-xs text-red-600">
                   {subError && error}

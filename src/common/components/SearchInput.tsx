@@ -57,19 +57,23 @@ const SearchInput = ({
         />
       </div>
       {openList && (
-        <ul className="absolute w-full rounded-lg p-[5px] top-[90px] bg-white dark:bg-black border-1 border-gray-200 dark:border-white">
-          {searchList.length>0 ? searchList.map((search: any) => (
-            <li
-              className="hover:bg-gray-200 dark:hover:bg-white/30 p-[10px] rounded-lg"
-              key={search.id}
-              onClick={() => {
-                onChange(search.name, search.id);
-                setOpenList(false);
-              }}
-            >
-              {search.name}
-            </li>
-          )) : <li className="p-[10px]">검색 결과가 없습니다.</li>}
+        <ul className="absolute w-full rounded-lg p-[5px] top-[90px] bg-white dark:bg-black border-1 border-gray-200 dark:border-white max-h-[225px] overflow-y-auto">
+          {searchList.length > 0 ? (
+            searchList.map((search: any) => (
+              <li
+                className="hover:bg-gray-200 dark:hover:bg-white/30 p-[10px] rounded-lg"
+                key={search.id}
+                onClick={() => {
+                  onChange(search.name, search.id);
+                  setOpenList(false);
+                }}
+              >
+                {search.name}
+              </li>
+            ))
+          ) : (
+            <li className="p-[10px]">검색 결과가 없습니다.</li>
+          )}
         </ul>
       )}
     </div>

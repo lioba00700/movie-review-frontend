@@ -11,7 +11,7 @@ import {
   MovieFormPage,
   MovieListPage,
 } from "@/pages/movie";
-import { AdminLoginPage, AdminSignupPage, AdminMoviePage } from "@/pages/admin";
+import { AdminLoginPage, AdminMoviePage } from "@/pages/admin";
 import AdminGuard from "./common/components/AdminGuard";
 
 function App() {
@@ -25,7 +25,6 @@ function App() {
 
         {/*관리자*/}
         <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/admin/signup" element={<AdminSignupPage />} />
 
         <Route element={<AdminGuard />}>
           <Route path="/add/director" element={<DirectorFormPage />} />

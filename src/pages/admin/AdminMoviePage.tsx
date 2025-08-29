@@ -1,8 +1,8 @@
 //2025.08.26 react query 를 적용  - 박민서
 //2025.08.25 관리자 영화 데이터 관리 화면 - 박민서
 import CustomButton from "@/common/components/CustomButton";
+import Modal from "@/common/components/Modal";
 import PaginationButton from "@/common/components/PaginationButton";
-import useModal from "@/common/hooks/useModal";
 import { getMovieList, patchMovie } from "@/features/movie/services/movieAPI";
 import type { Movie } from "@/features/movie/types";
 import { useQuery } from "@tanstack/react-query";
@@ -22,8 +22,9 @@ const tableHeader = [
 
 const AdminMoviePage = () => {
   const navigate = useNavigate();
-  const { handleModal } = useModal();
   const [selectedPage, setSelectedPage] = useState<number>(0);
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const fetchMovies = async (pageParam: number) => {
     const res = await getMovieList(pageParam);
@@ -44,14 +45,14 @@ const AdminMoviePage = () => {
     queryFn: () => fetchMovies(selectedPage),
   });
 
-  const handleSubmitDelete = async (id: number) => {
-    const res = await patchMovie(id);
+  const handleSubmitDelete = async () => {
+    const res = await patchMovie(selectedRow as number);
+    setSelectedRow(null);
     if (res.pass) {
-      toast.success('삭제되었습니다.');
+      toast.success("삭제되었습니다.");
       refetch();
-    }
-    else{
-      toast.error('삭제에 실패했습니다.');
+    } else {
+      toast.error("삭제에 실패했습니다.");
     }
   };
   console.log(data);
@@ -118,13 +119,10 @@ const AdminMoviePage = () => {
                 <CustomButton
                   value=""
                   icon="delete"
-                  onClick={() =>
-                    handleModal({
-                      type: "confirm",
-                      message: "정말 삭제하시겠습니까?",
-                      onSubmit: () => handleSubmitDelete(movie.movie_id),
-                    })
-                  }
+                  onClick={() => {
+                    setIsOpenModal(true);
+                    setSelectedRow(movie.movie_id);
+                  }}
                   style="bg-red-600 text-white text-sm w-[30px] h-[30px] hover:bg-red-700"
                 />
               </td>
@@ -150,6 +148,23 @@ const AdminMoviePage = () => {
           </tr>
         </tfoot>
       </table>
+      <Modal
+        title="영화 삭제"
+        content={
+          <p className="text-center mb-[30px]">
+            해당 작업은 되돌릴 수 없습니다.
+          </p>
+        }
+        btn1_name="취소"
+        btn1_onclick={() => setIsOpenModal(false)}
+        btn1_style="white"
+        btn2_name="삭제"
+        btn2_onclick={handleSubmitDelete}
+        btn2_style="red"
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        isOneBtn={false}
+      />
     </div>
   );
 };

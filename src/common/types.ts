@@ -22,34 +22,24 @@ export type FormAction =
   | { type: "CHANGE_LIST"; payload: { key: string; value: string } }
   | { type: "RESET" };
 
-export type ModalState = {
-  modal: {
-    isOpen: boolean;
-    type: "confirm" | "reviewDetail" | "editReview";
-    message: string;
-    onSubmit?: () => void;
-    movieId?: number | null;
-    reviewId?: number | null;
-  };
-  handleModal: ({
-    type,
-    message,
-    onSubmit,
-    movieId,
-    reviewId,
-  }: {
-    type: "confirm" | "reviewDetail" | "editReview";
-    message: string;
-    onSubmit?: (form?: ReviewCreateState) => void;
-    movieId?: number | null;
-    reviewId?: number | null;
-  }) => void;
-  closeModal: () => void;
+export type ModalProps = {
+  title: string;
+  content: string | React.ReactNode;
+  btn1_name: string;
+  btn1_onclick: () => void;
+  btn1_style: "white" | "red" | "blue";
+  btn2_name?: string;
+  btn2_onclick?: () => void;
+  btn2_style?: "white" | "red" | "blue";
+  isOneBtn: boolean;
+  isOpen: boolean;
+  onClose: () => void;
+  isNonBtn?: boolean;
 };
 
 export type AdminState = {
-  token: string | null
+  token: string | null;
   isLogin: boolean;
-  login: (token:string) => void;
+  login: (token: string) => void;
   logout: () => void;
 };

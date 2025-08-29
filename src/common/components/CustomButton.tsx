@@ -34,7 +34,10 @@ const CustomButton = ({
     <button
       className={`${style} flex gap-[10px] items-center justify-center cursor-pointer p-[5px] rounded-md translate-all disabled:bg-gray-300 disabled:cursor-default`}
       disabled={disabled}
-      onClick={onClick}
+      onClick={e => {
+        e.stopPropagation();
+        onClick();
+      }}
     >
       {value}
       {icon && buttonIcons[icon]}

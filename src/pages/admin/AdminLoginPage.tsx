@@ -46,16 +46,15 @@ const AdminLoginPage = () => {
       AdminLogin.parse(form);
       const res = await loginAdmin(form);
       if (res.pass) {
-        toast.success('로그인되었습니다.');
+        toast.success("로그인되었습니다.");
         dispatch({ type: "RESET" });
         login(res.data.accessToken);
         navigate("/");
-      }
-      else{
-        toast.error('로그인에 실패했습니다.');
+      } else {
+        toast.error("로그인에 실패했습니다.");
       }
     } catch (error) {
-      toast.error('로그인에 실패했습니다.');
+      toast.error("로그인에 실패했습니다.");
       setError(true);
       console.log(error);
     }
@@ -98,12 +97,6 @@ const AdminLoginPage = () => {
               .message}
         </p>
       </div>
-      <p
-        className="text-sm justify-self-end cursor-pointer p-[10px] hover:text-gray-500"
-        onClick={() => navigate("/admin/signup")}
-      >
-        회원가입
-      </p>
       <CustomButton
         value="로그인"
         style="mt-[50px] bg-blue-600 text-white text-md font-bold p-[8px] w-full dark:disabled:bg-gray-500/50"

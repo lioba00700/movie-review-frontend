@@ -20,7 +20,7 @@ const MainHeader = () => {
   const handleLogout = async () => {
     const res = await logoutAdmin();
     if (res.pass) {
-      toast.success('로그아웃 되었습니다.');
+      toast.success("로그아웃 되었습니다.");
       logout();
       navigate("/");
     }
@@ -28,7 +28,9 @@ const MainHeader = () => {
 
   return (
     <header className="flex text-nowrap max-md:text-sm justify-between bg-white dark:bg-black fixed w-full h-[60px] z-4 border-b-1 border-gray-200 dark:border-gray-500 items-center p-[20px] top-0">
-      <h1 className="text-2xl font-bold dark:text-white max-md:text-lg">영화 리뷰</h1>
+      <h1 className="text-2xl font-bold dark:text-white max-md:text-lg">
+        영화 리뷰
+      </h1>
       <div className="flex gap-[30px] text-md font-semibold text-gray-600 dark:text-gray-200">
         <p
           className="hover:text-gray-400 cursor-pointer"
@@ -54,19 +56,12 @@ const MainHeader = () => {
         )}
       </div>
       <div className="flex items-center gap-[20px] ">
-        {isLogin ? (
+        {isLogin && (
           <p
             className="hover:text-gray-400 cursor-pointer text-gray-600 dark:text-gray-200 text-md font-semibold"
             onClick={handleLogout}
           >
             로그아웃
-          </p>
-        ) : (
-          <p
-            className="hover:text-gray-400 cursor-pointer text-gray-600 dark:text-gray-200 text-md font-semibold"
-            onClick={() => navigate("/admin/login")}
-          >
-            관리자 로그인
           </p>
         )}
         <ThemeToggle theme={theme} onClick={toggleTheme} />
