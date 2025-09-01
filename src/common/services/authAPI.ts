@@ -1,0 +1,64 @@
+//2025.08.27 관리자 관련 API 요청 - 박민서
+import { adminAxios } from "../adminAxios";
+import { publicAxios } from "../publicAxios";
+
+//관리자 회원가입
+export const signupAdmin = async ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) => {
+  try {
+    const res = await publicAxios.post("/signup", {
+      username,
+      password,
+      role: "ROLE_ADMIN",
+    });
+    return { pass: true, data: res.data };
+  } catch (error) {
+    return { pass: false, data: error };
+  }
+};
+
+//관리자 로그인
+export const loginAdmin = async (form: {
+  username: string;
+  password: string;
+}) => {
+  try {
+    console.log(form);
+    const res = await publicAxios.post("/login", form, {
+      withCredentials: true,
+    });
+    return { pass: true, data: res.data };
+  } catch (error) {
+    return { pass: false, data: error };
+  }
+};
+
+//관리자 토큰 갱신
+export const tokenAdmin = async () => {
+  try {
+    const res = await publicAxios.get("/login/token", {
+      withCredentials: true,
+    });
+    console.log(res);
+    return { pass: true, data: res.data };
+  } catch (error) {
+    return { pass: false, data: error };
+  }
+};
+
+//관리자 로그아웃
+export const logoutAdmin = async () => {
+  try {
+    const res = await adminAxios.get("/logout", {
+      withCredentials: true,
+    });
+    return { pass: true, data: res.data };
+  } catch (error) {
+    return { pass: false, data: error };
+  }
+};

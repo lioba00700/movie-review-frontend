@@ -1,0 +1,35 @@
+//2025.08.22 label 추가 및 필수 입력 표시, 이미지 파일 등록 로직 분리 (ImageUploader) - 박민서
+
+type CustomInput = {
+  label: string;
+  required?: boolean;
+  type: string;
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const CustomInput = ({
+  label,
+  required,
+  type,
+  value,
+  onChange,
+}: CustomInput) => {
+  return (
+    <div className="flex flex-col gap-[5px] mb-[5px]">
+      <label className="font-semibold">
+        {required && <span className="mr-[5px] text-red-600">*</span>}
+        {label}
+      </label>
+      <input
+        className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg dark:border-gray-400"
+        type={type !== "time" ? type : "text"}
+        value={value}
+        onChange={onChange}
+        {...(type === "time" ? { minLength: 6 } : undefined)}
+      />
+    </div>
+  );
+};
+
+export default CustomInput;
