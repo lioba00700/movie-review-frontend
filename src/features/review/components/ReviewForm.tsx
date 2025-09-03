@@ -112,7 +112,9 @@ const ReviewForm = ({
       <div className="flex flex-col gap-[5px] mb-[5px]">
         <label className="font-semibold">내용</label>
         <textarea
-          className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg"
+        rows={4}
+        cols={4}
+          className="transition-all border-1 border-gray-300 focus:border-blue-400 outline-none rounded-lg p-[8px] text-lg resize-none"
           onChange={e =>
             dispatch({
               type: "CHAGNE",
